@@ -1,25 +1,46 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {saveToStorage} from "./utils";
 
-const initialState = {
+const STORE_NAME = 'auth';
+
+const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {
   isAuth: false,
 }
 
 export const user = createSlice({
-  name: 'auth',
+  name: STORE_NAME,
   initialState,
   reducers: {
     login: (state, action) => {
-      state.value = {
+      state = {
+        ...state,
         ...action.payload
       }
+      saveToStorage(state, STORE_NAME)
+      return state
     },
     logout: (state) => {
-      state.value = initialState
+      state = {
+        isAuth: false
+      }
+      saveToStorage(state, STORE_NAME)
+      return state
     },
+    error: (state, action) => {
+      state = {
+        ...state,
+        error: action.payload
+      }
+      return state
+    },
+    cleanError: (state) => {
+      delete state.error
+      return state
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {login, logout} = user.actions
+export const {login, logout, error, cleanError} = user.actions
 
 export default user.reducer

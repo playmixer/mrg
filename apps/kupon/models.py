@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-
 amount_decimal = {
     'decimal_places': 2,
     'max_digits': 10
@@ -13,8 +12,11 @@ class Organization(models.Model):
     class Meta:
         db_table = 'organization'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
-    title = models.CharField(max_length=200)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False)
+    title = models.CharField(max_length=200, unique=True)
+    phone = models.CharField(max_length=12)
+    email = models.CharField(max_length=200)
+    retailer = models.CharField(max_length=200)
     is_activate = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -26,25 +28,16 @@ class Organization(models.Model):
         return f"<{self.id} - {self.title}>"
 
 
-class ProposalOrganization(models.Model):
+class UserToOrganization(models.Model):
     """
     Заявка на получение статуса организации
     """
 
     class Meta:
-        db_table = 'proposal_organization'
+        db_table = 'user_organization'
 
-    ST_NONE = 'no'
-    ST_REJECTED = 'rj'
-    ST_ACCEPTED = 'ac'
-    STATUS_CHOICES = [
-        (ST_NONE, 'None'),
-        (ST_REJECTED, 'Rejected'),
-        (ST_ACCEPTED, 'Accepted')
-    ]
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     organization = models.ForeignKey('Organization', on_delete=models.CASCADE, blank=False)
-    status = models.CharField(max_length=2, default=ST_NONE, choices=STATUS_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

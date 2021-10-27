@@ -1,10 +1,11 @@
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from . import schemas
+from .. import schemas
 import json
 
 
@@ -21,12 +22,14 @@ class Auth(APIView):
         schemas_user = schemas.AuthUserSchema.from_orm(user)
         content = {
             'isAuth': user.is_authenticated,  # None
-            **schemas_user.dict()
+            **schemas_user.dict(),
+            'groups': [group.name for group in user.groups.all()]
         }
         return Response(content)
 
 
 class AuthLogin(APIView):
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -40,8 +43,9 @@ class AuthLogin(APIView):
             schemas_user = schemas.AuthUserSchema.from_orm(user)
 
             return Response({
-                'isAuth': True,
-                **schemas_user.dict()
+                'isAuth': user.is_authenticated,
+                **schemas_user.dict(),
+                'groups': [group.name for group in user.groups.all()]
             })
         except ExceptionUsernameOrPasswordIncorrect as err:
             logout(request)
@@ -64,3 +68,4 @@ class AuthLogout(APIView):
             # 'user': request.user,
             'isAuth': False
         })
+
