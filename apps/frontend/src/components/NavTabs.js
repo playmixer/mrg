@@ -8,7 +8,6 @@ const NavTabs = ({tabs, onChange, active, className}) => {
         <a className={`nav-link ${active === i && 'active'}`}
            style={{borderRadius: 0}}
            key={i}
-           href="#"
            onClick={() => onChange(i)}
         >
           {v}

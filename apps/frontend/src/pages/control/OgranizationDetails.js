@@ -11,6 +11,7 @@ import * as actionUser from '../../store/actions/user';
 
 import Button from "../../components/Button";
 import Notification from "../../components/Notification";
+import SelectAsync from "../../components/inputs/SelectAsync"
 
 
 const formInputs = [
@@ -95,23 +96,6 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     setValuesForm(org)
   }
 
-  const handleUserSearch = (text) => {
-    setTextSearch(text)
-    return text;
-  }
-
-  const loadOptions = (inputValue, callback) => {
-    let data = [];
-    actionUser.search({username: inputValue, is_retailer: false})
-      .then(res => {
-        data = res.map((v) => ({label: v.username, value: v.id})) || []
-      })
-
-    setTimeout(() => {
-      callback(() => (data))
-    }, 1000)
-  }
-
   const handleAddUser = () => {
     const payload = {
       username: userSelected.label,
@@ -131,6 +115,23 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     dispatch(actionOrganization.removeUser(payload))
   }
 
+  const handleUserSearch = (text) => {
+    setTextSearch(text)
+    return text;
+  }
+
+  const loadOptions = (inputValue, callback) => {
+    let data = [];
+    actionUser.search({username: inputValue, is_retailer: false})
+      .then(res => {
+        data = res.map((v) => ({label: v.username, value: v.id})) || []
+      })
+
+    setTimeout(() => {
+      callback(() => (data))
+    }, 1000)
+  }
+
   useEffect(() => {
     chooseOrg()
   }, [organization])
@@ -143,7 +144,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
       {org.title}
     </div>
     <div className="mb-3">
-      <Button onClick={() => history.push("/control")}>Назад</Button>
+      <Button onClick={() => history.push("/control/organizations")}>Назад</Button>
     </div>
     <div className="mb-3">
       <Button style={{width: 150}} schema={tab === PT_DETAIL ? 'main-primary' : ''}
@@ -178,12 +179,8 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     {tab === PT_USERS && <div>
       <div className="mb-3">
         <div className="mb-3">
-          <label htmlFor="search">Найти</label>
-          <AsyncSelect
-            styles={{
-              control: (styles) => ({...styles, borderRadius: 0}),
-              option: (styles) => ({...styles, borderRadius: 0, marginTop: 0})
-            }}
+          <SelectAsync
+            title={"Найти"}
             onInputChange={handleUserSearch}
             loadOptions={loadOptions}
             onChange={setUserSelected}
@@ -196,7 +193,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
         <thead>
         <tr>
           <th>Пользователь</th>
-          <th> </th>
+          <th></th>
         </tr>
         </thead>
         <tbody>

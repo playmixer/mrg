@@ -11,6 +11,7 @@ urlpatterns = [
     path('auth/login/', view_auth.AuthLogin.as_view(), name='auth_login'),
     path('auth/logout/', view_auth.AuthLogout.as_view(), name='auth_logout'),
     path('organizations/user/', view_organizations.UserToOrganizations.as_view()),
+    path('organizations/search/', view_organizations.SearchOrganizations.as_view()),
     path('organizations/', view_organizations.Organizations.as_view()),
     path('user/search/', view_user.SearchUser.as_view()),
     path('offer/', view_offer.Offer.as_view())

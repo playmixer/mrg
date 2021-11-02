@@ -68,8 +68,10 @@ class Offer(models.Model):
     moderate_status = models.CharField(max_length=2, default=ST_NONE, choices=STATUS_CHOICES)
     date_start = models.DateField(blank=False)
     date_end = models.DateField(blank=False)
-    scores = models.IntegerField(blank=False)
-    amount = models.DecimalField(blank=False, **amount_decimal)
+    scores = models.IntegerField(blank=False, default=0)
+    amount = models.DecimalField(blank=False, default=0, **amount_decimal)
+    quantity_per_hand = models.IntegerField(blank=False, default=1)
+    client_level = models.IntegerField(blank=False, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -81,7 +83,7 @@ class Coupon(models.Model):
 
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, blank=False)
     code = models.CharField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, default=None)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
 
     def __repr__(self):
         return f"<{self.id} - {self.offer.title}>"

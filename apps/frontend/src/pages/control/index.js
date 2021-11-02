@@ -1,39 +1,66 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
+import {useHistory} from "react-router-dom"
+
 import NavTabs from "../../components/NavTabs";
-
 import OrganizationList from "./OrganizationList";
-import OfferList from "./OfferList";
-
-import * as organizationAction from '../../store/actions/organization'
+import Offer from "./Offer";
 import Page404 from "../404";
+
 
 const ORGS = 'Организации'
 const COUPS = 'Акции'
 
-const tabs = [ORGS, COUPS];
+const tabs = [
+  {
+    name: ORGS,
+    link: '/control/organizations'
+  },
+  {
+    name: COUPS,
+    link: '/control/offers'
+  }
+];
 
 
-const Control = ({dispatch, user, organization}) => {
+const Control = ({user, tab}) => {
+  const history = useHistory();
+
   if (!user.isAuth)
     return <Page404/>;
 
   const [panel, setPanel] = useState(0);
 
+  const handleChangeTab = (e) => {
+    setPanel(e)
+    history.push(tabs[e].link)
+  }
+
+  const getOffer = () => {
+    tabs.map((v, i) => {
+      if (v.name === tab) {
+        setPanel(i)
+      }
+    })
+  }
+
+  useEffect(() => {
+    getOffer()
+  }, [])
+
   return <div>
     <h3 className="mb-3">Панель управления</h3>
     <NavTabs
-      tabs={tabs}
+      tabs={tabs.map(v => (v.name))}
       active={panel}
-      onChange={setPanel}
+      onChange={handleChangeTab}
       className="mb-3"
     />
-    {tabs[panel] === ORGS && <OrganizationList/>}
-    {tabs[panel] === COUPS && <OfferList/>}
+    {tabs[panel]?.name === ORGS && <OrganizationList/>}
+    {tabs[panel]?.name === COUPS && <Offer/>}
   </div>
 }
 
 export default connect(state => ({
   user: state.user,
-  organization: state.organization
 }))(Control);

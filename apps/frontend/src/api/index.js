@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const API = 'http://127.0.0.1:8000'
+
 const getCSRF = () => {
   if (!document.cookie) {
     return null;
@@ -20,7 +22,9 @@ const _request = (url, method, data, headers = {}) => {
     method,
     url,
     data,
-    headers
+    headers: {
+      ...headers,
+    }
   })
 }
 
@@ -39,36 +43,51 @@ const _get = (url, data = {}) => {
   }).join('&')
   return _request(`${url}?${query}`, 'get', {})
 }
+
 // Auth API
 export const authLogin = (payload) =>
-  _post('/api/v0/auth/login/', payload)
+  _post(`${API}/api/v0/auth/login/`, payload)
+    .then(res => {
+      console.log(res.headers)
+
+      return res
+    })
 
 export const authLogout = () =>
-  _get('/api/v0/auth/logout/', {})
+  _get(`${API}/api/v0/auth/logout/`, {})
 
 export const authState = (payload = {}) =>
-  _get('/api/v0/auth/')
+  _get(`${API}/api/v0/auth/`)
 
 // Organization API
 export const organizationNew = (payload) =>
-  _post('/api/v0/organizations/', payload)
+  _post(`${API}/api/v0/organizations/`, payload)
 
 export const organizationList = (payload) =>
-  _get('/api/v0/organizations/', {})
+  _get(`${API}/api/v0/organizations/`, {})
 
 export const organizationUpdate = (payload) =>
-  _update('/api/v0/organizations/', payload)
+  _update(`${API}/api/v0/organizations/`, payload)
 
 export const organizationAddUser = (payload) =>
-  _post('/api/v0/organizations/user/', payload)
+  _post(`${API}/api/v0/organizations/user/`, payload)
 
 export const organizationRemoveUser = (payload) =>
-  _delete('/api/v0/organizations/user/', payload)
+  _delete(`${API}/api/v0/organizations/user/`, payload)
+
+export const organizationSearch = (payload) =>
+  _get(`${API}/api/v0/organizations/search/`, payload)
 
 // User API
 export const userSearch = (payload) =>
-  _get('/api/v0/user/search/', payload)
+  _get(`${API}/api/v0/user/search/`, payload)
 
 // Offer API
 export const offerList = payload =>
-  _get('/api/v0/offer/')
+  _get(`${API}/api/v0/offer/`)
+
+export const offerNew = payload =>
+  _post(`${API}/api/v0/offer/`, payload)
+
+export const offerUpdate = payload =>
+  _update(`${API}/api/v0/offer/`, payload)

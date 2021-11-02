@@ -8,6 +8,29 @@ from rest_framework.views import APIView
 from .. import schemas
 
 
+class SearchOrganizations(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            if not IsModerator().has_permission(request=request, view=None):
+                raise Exception('Not have permission')
+            data = request.query_params
+            search_title = data.get('title')
+            orgs = kuponModels.Organization.objects.filter(title__contains=search_title)
+            orgs_res = [schemas.SearchOrganizationSchema.from_orm(org).dict() for org in orgs]
+
+            return Response({
+                'success': True,
+                'data': orgs_res
+            })
+        except Exception as err:
+            return Response({
+                'detail': str(err)
+            }, 400)
+
+
 class Organizations(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]

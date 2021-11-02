@@ -6,11 +6,11 @@ import {connect} from "react-redux";
 import Button from "../../components/Button";
 import InputText from "../../components/inputs/InputText";
 import * as organizationAction from "../../store/actions/organization";
+import Table from "../../components/Table";
 
-const ListOrganization = ({data}) => {
+const DataList = ({data}) => {
   const history = useHistory()
 
-  console.log(data)
   return <div>
     <table className="table">
       <thead>
@@ -24,7 +24,7 @@ const ListOrganization = ({data}) => {
       </thead>
       <tbody>
       {
-        data.data && data.data.map((v, i) => {
+        data && data.map((v, i) => {
           return (
             <tr key={i} onClick={() => history.push(`/control/organization/${v.id}`)}>
               <td>{v.title}</td>
@@ -46,7 +46,7 @@ const OrganizationList = ({dispatch, organization}) => {
   const P_LIST = 0
   const P_NEW = 1
 
-  const [orgsData, setOrgsData] = useState({})
+  const [orgsData, setOrgsData] = useState([])
   const [formValues, setFormValues] = useState({})
   const [action, setAction] = useState(P_LIST)
 
@@ -66,7 +66,7 @@ const OrganizationList = ({dispatch, organization}) => {
 
   useEffect(() => {
     dispatch(organizationAction.list())
-    setOrgsData(organization)
+    setOrgsData(organization.data)
   }, [])
 
 
@@ -77,7 +77,7 @@ const OrganizationList = ({dispatch, organization}) => {
     <Button style={{width: 100}} schema={action === P_NEW && `main-primary`} onClick={() => setAction(P_NEW)}>
       Добавить
     </Button>
-    {action === P_LIST && <ListOrganization data={orgsData}/>}
+    {action === P_LIST && <DataList data={orgsData}/>}
     {action === P_NEW && <div>
       <form onSubmit={handleAddOrganization}>
         <InputText

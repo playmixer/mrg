@@ -1,38 +1,36 @@
-import React, {useEffect, useState} from "react";
+import React from 'react';
 import {connect} from "react-redux";
+import {useHistory} from "react-router-dom";
 
-import * as offerAction from '../../store/actions/offer';
-import Button from "../../components/Button";
+const OfferList = ({data}) => {
+  const history = useHistory()
 
-
-const OfferList = ({dispatch, offer}) => {
-  const P_LIST = 0
-  const P_NEW = 1
-
-  const [action, setAction] = useState(P_LIST)
-
-  useEffect(() => {
-    dispatch(offerAction.list())
-  }, [])
-
-  console.log(offer)
   return <div>
-    <Button style={{width: 100}} schema={action === P_LIST && `main-primary`} onClick={() => setAction(P_LIST)}>
-      Список
-    </Button>
-    <Button style={{width: 100}} schema={action === P_NEW && `main-primary`} onClick={() => setAction(P_NEW)}>
-      Добавить
-    </Button>
-    {action === P_LIST && <div>
-      list
-    </div>}
-    {action === P_NEW && <div>
-      
-    </div>}
-  </div>
-
+      <table className="table table-striped">
+        <thead>
+        <tr>
+          <th> title</th>
+          <th>Начало</th>
+          <th>Окончание</th>
+          <th>Описание</th>
+          <th>Организация</th>
+          <th>Кол-во в руки</th>
+          <th>Уровень</th>
+        </tr>
+        </thead>
+        <tbody>
+        {data.map((v, i) => <tr key={i} onClick={() => {history.push('/control/offer/'+v.id)}}>
+          <td>{v.title}</td>
+          <td>{v.date_start}</td>
+          <td>{v.date_end}</td>
+          <td>{v.description}</td>
+          <td>{v.organization.title}</td>
+          <td>{v.quantity_per_hand}</td>
+          <td>{v.client_level}</td>
+        </tr>)}
+        </tbody>
+      </table>
+    </div>
 }
 
-export default connect(state => ({
-  offer: state.offer
-}))(OfferList);
+export default OfferList;

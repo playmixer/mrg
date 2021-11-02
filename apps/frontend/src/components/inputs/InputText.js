@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputText = ({title, value, onChange, placeholder = "", readonly = false, type = "text", name}) => {
+const InputText = ({title, value, onChange, placeholder = "", readonly = false, type = "text", name, disabled=false}) => {
   const handleChange = (e) => {
     console.log(e.target.name)
     onChange && onChange(e)
@@ -16,6 +16,7 @@ const InputText = ({title, value, onChange, placeholder = "", readonly = false, 
       placeholder={placeholder}
       readOnly={readonly}
       name={name}
+      disabled={disabled}
     />
   </div>
 }

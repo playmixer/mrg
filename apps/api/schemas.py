@@ -19,8 +19,6 @@ class AuthUserSchema(BaseModel):
     username: str
     email: str
 
-    # groups: List[str]
-
     class Config:
         orm_mode = True
 
@@ -28,6 +26,18 @@ class AuthUserSchema(BaseModel):
 class UserSchema(BaseModel):
     id: int
     username: str
+
+    class Config:
+        orm_mode = True
+
+
+class SearchOrganizationSchema(BaseModel):
+    id: int
+    title: str
+    phone: str
+    email: str
+    retailer: str
+    is_activate: bool
 
     class Config:
         orm_mode = True
@@ -47,7 +57,7 @@ class OrganizationSchema(BaseModel):
 
 
 class OrganizationsSchema(BaseModel):
-    __root__ = list[OrganizationSchema]
+    data = list[OrganizationSchema]
 
     class Config:
         orm_mode = True
@@ -72,8 +82,8 @@ class OfferSchema(BaseModel):
     organization: OfferOrganizationSchema
     date_start: date
     date_end: date
-    scores: int
-    amount: float
+    quantity_per_hand: int
+    client_level: int
 
     class Config:
         orm_mode = True
