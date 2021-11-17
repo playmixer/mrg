@@ -26,8 +26,11 @@ const OfferNew = ({dispatch}) => {
   const handleSubmit = e => {
     e.preventDefault();
     console.log(inputsValue);
-    dispatch(actionOffer.add(inputsValue));
-    history.push(getLink('controlOffers'));
+    dispatch(actionOffer.add(inputsValue))
+      .then(res => {
+        const id = res.id;
+        history.push(getLink('controlOffer').replace(':id', id));
+      })
   }
 
   const handleSelectOrg = (v) => {
@@ -61,12 +64,14 @@ const OfferNew = ({dispatch}) => {
         name={'date_start'}
         type={"date"}
         onChange={handleInputChange}
+        style={{width: 300}}
       />
       <InputText
         title={"Окончание"}
         name={'date_end'}
         type={"date"}
         onChange={handleInputChange}
+        style={{width: 300}}
       />
       <InputText
         title={"Описание"}
@@ -83,22 +88,19 @@ const OfferNew = ({dispatch}) => {
       <InputText
         title={"Кол-во в руки"}
         name={'quantity_per_hand'}
-        value={1}
         onChange={handleInputChange}
       />
       <InputText
         title={"Уровень"}
         name={'client_level'}
-        value={1}
         onChange={handleInputChange}
       />
-      <InputText
-        type="number"
-        title={"Кол-во купонов"}
-        name={'coupon_count'}
-        value={100}
-        onChange={handleInputChange}
-      />
+      {/*<InputText*/}
+      {/*  type="number"*/}
+      {/*  title={"Кол-во купонов"}*/}
+      {/*  name={'coupon_count'}*/}
+      {/*  onChange={handleInputChange}*/}
+      {/*/>*/}
       <Button type={"submit"}>
         Создать
       </Button>

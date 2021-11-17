@@ -8,7 +8,7 @@ import Offer from "./Offer";
 import Page404 from "../404";
 
 
-const ORGS = 'Организации'
+const ORGS = 'Партнеры'
 const COUPS = 'Акции'
 
 const tabs = [
@@ -26,7 +26,7 @@ const tabs = [
 const Control = ({user, tab}) => {
   const history = useHistory();
 
-  if (!user.isAuth)
+  if (!user.isAuth || user.roles.indexOf('moderator') < 0)
     return <Page404/>;
 
   const [panel, setPanel] = useState(0);

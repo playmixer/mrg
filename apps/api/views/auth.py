@@ -23,7 +23,7 @@ class Auth(APIView):
         content = {
             'isAuth': user.is_authenticated,  # None
             **schemas_user.dict(),
-            'groups': [group.name for group in user.groups.all()]
+            'roles': [group.name for group in user.groups.all()]
         }
         return Response(content)
 
@@ -45,7 +45,7 @@ class AuthLogin(APIView):
             return Response({
                 'isAuth': user.is_authenticated,
                 **schemas_user.dict(),
-                'groups': [group.name for group in user.groups.all()]
+                'roles': [group.name for group in user.groups.all()]
             })
         except ExceptionUsernameOrPasswordIncorrect as err:
             logout(request)

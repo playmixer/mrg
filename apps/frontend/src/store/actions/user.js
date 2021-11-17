@@ -46,3 +46,13 @@ export const search = (payload) =>
       }
     })
     .catch(err => console.log(err.message))
+
+export const coupons = payload => dispatch =>
+  apiHandle.userCoupons(payload)
+    .then(res => {
+      if (res.status === 200 && res.data.success) {
+        dispatch(userStore.coupons(res.data.data))
+        return res.data
+      }
+    })
+    .catch(err => console.log(err.message))

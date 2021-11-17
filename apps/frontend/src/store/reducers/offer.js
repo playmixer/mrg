@@ -7,6 +7,10 @@ const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.
   data: [],
 }
 
+const save = (state) =>
+  saveToStorage(state, STORE_NAME)
+
+
 export const offer = createSlice({
   name: STORE_NAME,
   initialState,
@@ -18,7 +22,7 @@ export const offer = createSlice({
           ...action.payload
         ]
       }
-      saveToStorage(state, STORE_NAME)
+      save(state)
       return state
     },
     add: (state, action) => {
@@ -29,7 +33,7 @@ export const offer = createSlice({
           action.payload
         ]
       }
-      saveToStorage(state, STORE_NAME)
+      save(state)
       return state
     },
     update: (state, action) => {
@@ -42,13 +46,26 @@ export const offer = createSlice({
           ...data
         ]
       }
-      saveToStorage(state, STORE_NAME)
+      save(state)
+      return state
+    },
+    addAddress: (state, action) => {
+      let data = state.data.map(v => {
+        return v.id === action.payload.id ? action.payload : v;
+      })
+      state = {
+        ...state,
+        data: [
+          ...data
+          ]
+      }
+
+      save(state)
       return state
     }
   }
 })
 
-// Action creators are generated for each case reducer function
-export const {list, add, update} = offer.actions
+export const {list, add, update, addAddress} = offer.actions
 
 export default offer.reducer

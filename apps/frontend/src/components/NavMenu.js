@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import * as userHandle from "../store/actions/user";
 
 import Button from "./Button";
+import {getLink} from "../routers";
 
 const NavMenu = ({dispatch, user, routers}) => {
 
@@ -36,9 +37,9 @@ const NavMenu = ({dispatch, user, routers}) => {
             <li className="nav-item">
               <Link className="nav-link link-light" to={routers.organization.link}>{routers.organization.title}</Link>
             </li>
-            <li className="nav-item">
+            {user.isAuth && user.roles.indexOf('moderator') >= 0 && <li className="nav-item">
               <Link className="nav-link link-light" to={routers.control.link}>{routers.control.title}</Link>
-            </li>
+            </li>}
 
           </ul>
           {/*<form className="d-flex">*/}
@@ -47,7 +48,9 @@ const NavMenu = ({dispatch, user, routers}) => {
           {/*</form>*/}
           {user.isAuth
             ? <>
-              <span className="text-light" style={{marginRight: 5}}>Пользователь: {user.username}</span>
+              <Link className="nav-link link-light" to={getLink('profile')}>
+                <span className="text-light" style={{marginRight: 5}}>Пользователь: {user.username}</span>
+              </Link>
               <Button schema={'light'} onClick={logoutHandle}>Выйти</Button>
             </>
             : <Link to={routers.auth.link} className="nav-link link-light">Auth</Link>

@@ -39,3 +39,60 @@ class SearchUser(APIView):
             'success': True,
             'data': users_data
         })
+
+
+# class Coupon(APIView):
+#     authentication_classes = [SessionAuthentication, BasicAuthentication]
+#     permission_classes = [IsAuthenticated]
+#
+#     def get(self, request):
+#         try:
+#             user = request.user
+#             data = request.data
+#             id = data.get('id')
+#
+#             coupons = modelsKupon.Coupon.objects.filter(user_id=user.id, offer_id=id)
+#             res = [{
+#                 'id': coupon.id,
+#                 'title': coupon.offer.title,
+#                 'date_start': coupon.offer.date_start,
+#                 'date_end': coupon.offer.date_end
+#             } for coupon in coupons]
+#
+#             return Response({
+#                 'success': True,
+#                 'data': res
+#             })
+#         except Exception as err:
+#             return Response({
+#                 'detail': str(err)
+#             }, 400)
+
+
+class Coupons(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = request.user
+
+            coupons = modelsKupon.Coupon.objects.filter(user_id=user.id).order_by('-date_buy')
+            res = [{
+                'id': coupon.id,
+                'offer_id': coupon.offer.id,
+                'title': coupon.offer.title,
+                'date_start': coupon.offer.date_start,
+                'date_end': coupon.offer.date_end,
+                'image_promo': f'offer_{coupon.offer.id}_promo.jpg',
+                'code': coupon.code
+            } for coupon in coupons]
+
+            return Response({
+                'success': True,
+                'data': res
+            })
+        except Exception as err:
+            return Response({
+                'detail': str(err)
+            }, 400)

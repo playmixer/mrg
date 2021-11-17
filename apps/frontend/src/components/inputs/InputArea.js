@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputText = ({title, value, onChange, placeholder = "", readonly = false, type = "text", name, disabled = false, style}) => {
+const InputArea = ({title, value, onChange, placeholder = "", readonly = false, type = "text", name, disabled = false, style}) => {
   const handleChange = (e) => {
     onChange && onChange(e)
   }
@@ -8,7 +8,7 @@ const InputText = ({title, value, onChange, placeholder = "", readonly = false, 
   return <div className="mb-3">
     {title && <label className="form-label">{title}</label>}
     <div>
-      <input
+      <textarea
         type={type}
         className="form-control"
         style={{borderRadius: 0, ...style}}
@@ -24,4 +24,4 @@ const InputText = ({title, value, onChange, placeholder = "", readonly = false, 
   </div>
 }
 
-export default InputText;
+export default InputArea;

@@ -1,10 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
+import {useHistory} from "react-router-dom";
+
+import {getLink} from "../routers";
+
 import * as userHandle from '../store/actions/user';
 
 const Auth = ({dispatch, user}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const history = useHistory();
+
+  if (user.isAuth)
+    history.push(getLink())
 
   const authLoginHandle = () => {
     dispatch(userHandle.login({

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({children, schema, type="button", onClick, style, className = ""}) => {
+export default ({children, schema, type="button", onClick, style, className = "", disabled}) => {
   let schemaStyle = '';
   switch (schema) {
     case 'primary':
@@ -24,6 +24,7 @@ export default ({children, schema, type="button", onClick, style, className = ""
     className={`btn ${schemaStyle} ` + className}
     style={{borderRadius: 0, ...style}}
     onClick={onClick}
+    disabled={disabled}
   >
     {children}
   </button>

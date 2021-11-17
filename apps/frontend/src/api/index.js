@@ -28,8 +28,8 @@ const _request = (url, method, data, headers = {}) => {
   })
 }
 
-const _post = (url, data) =>
-  _request(url, 'post', data, {"X-CSRFToken": getCSRF()})
+const _post = (url, data, headers) =>
+  _request(url, 'post', data, {"X-CSRFToken": getCSRF(), ...headers})
 
 const _update = (url, data) =>
   _request(url, 'put', data, {"X-CSRFToken": getCSRF()})
@@ -43,6 +43,11 @@ const _get = (url, data = {}) => {
   }).join('&')
   return _request(`${url}?${query}`, 'get', {})
 }
+
+// Application
+
+export const upload = (payload) =>
+  _post(`${API}/api/v0/upload/`, payload)
 
 // Auth API
 export const authLogin = (payload) =>
@@ -82,12 +87,27 @@ export const organizationSearch = (payload) =>
 export const userSearch = (payload) =>
   _get(`${API}/api/v0/user/search/`, payload)
 
+export const userCoupons = (payload) =>
+  _get(`${API}/api/v0/user/coupons/`)
+
 // Offer API
 export const offerList = payload =>
-  _get(`${API}/api/v0/offer/`)
+  _get(`${API}/api/v0/offers/`)
 
 export const offerNew = payload =>
   _post(`${API}/api/v0/offer/`, payload)
 
 export const offerUpdate = payload =>
   _update(`${API}/api/v0/offer/`, payload)
+
+export const offerAddAddress = payload =>
+  _post(`${API}/api/v0/offer/address/`, payload)
+
+export const offerBuyCoupon = payload =>
+  _post(`${API}/api/v0/offer/buy/`, payload)
+
+export const offerCreateCoupons = payload =>
+  _post(`${API}/api/v0/offer/coupons/`, payload)
+
+export const offerGetCoupons = payload =>
+  _get(`${API}/api/v0/offer/coupons/`, payload)

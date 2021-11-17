@@ -160,6 +160,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
           <label htmlFor={v.name} className="form-label">{v.title}</label>
           <input type="text" id={v.name} name={v.name} className="form-control"
                  value={editable ? valuesForm[v.name] : org[v.name]} onChange={handleChangeInput}
+                 style={{borderRadius: 0}}
                  readOnly={!editable}/>
         </div>
       )}
@@ -167,6 +168,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
         <label htmlFor={"is_activate"} className="form-label">Активно</label>
         <input type="checkbox" id={"is_activate"} name={"is_activate"} className="form-check-input"
                onChange={handleActivate}
+               style={{borderRadius: 0}}
                disabled={!editable} checked={editable ? valuesForm['is_activate'] : org['is_activate']}/>
       </div>
       {!editable

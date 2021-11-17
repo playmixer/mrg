@@ -1,3 +1,4 @@
+from apps.kupon.models import OfferAddress, Offer, Coupon
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime, date
@@ -84,6 +85,32 @@ class OfferSchema(BaseModel):
     date_end: date
     quantity_per_hand: int
     client_level: int
+    image_promo: Optional[str]
+    addresses: Optional[list]
 
     class Config:
         orm_mode = True
+
+
+class OfferDict:
+    @staticmethod
+    def get(obj: Offer):
+        res = OfferSchema.from_orm(obj).dict()
+        res['image_promo'] = f'offer_{res["id"]}_promo.jpg'
+        res['addresses'] = [{
+            'value': address.name,
+            'geo_lat': address.latitude,
+            'geo_lon': address.longitude
+        } for address in OfferAddress.objects.filter(offer_id=obj.id)]
+        return res
+
+
+class CouponsDict:
+    @staticmethod
+    def get(obj: Coupon):
+        res = dict()
+        res['count'] = obj.count()
+        res['purchased'] = obj.filter(user_id__isnull=False).count()
+        res['activated'] = obj.filter(date_activate__isnull=False).count()
+
+        return res

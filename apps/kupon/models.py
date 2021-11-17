@@ -76,6 +76,16 @@ class Offer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class OfferAddress(models.Model):
+    class Meta:
+        db_table = 'offer_address'
+
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, blank=False, null=False)
+    latitude = models.FloatField(blank=True, default=None)
+    longitude = models.FloatField(blank=True, default=None)
+
+
 class Coupon(models.Model):
     class Meta:
         db_table = 'coupon'
@@ -84,6 +94,8 @@ class Coupon(models.Model):
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, blank=False)
     code = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
+    date_buy = models.DateTimeField(blank=True, default=None, null=True)
+    date_activate = models.DateTimeField(blank=True, default=None, null=True)
 
     def __repr__(self):
         return f"<{self.id} - {self.offer.title}>"
