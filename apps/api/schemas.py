@@ -59,7 +59,7 @@ class OrganizationSchema(BaseModel):
 
 
 class OrganizationsSchema(BaseModel):
-    data = list[OrganizationSchema]
+    data: List[OrganizationSchema]
 
     class Config:
         orm_mode = True
