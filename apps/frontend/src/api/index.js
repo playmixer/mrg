@@ -1,6 +1,9 @@
+import {Config} from "../config";
+
 const axios = require('axios');
 
-const API = ''
+
+const API = Config.SUBDIRECTORY
 
 const getCSRF = () => {
   if (!document.cookie) {
@@ -45,6 +48,8 @@ const _get = (url, data = {}) => {
 }
 
 // Application
+
+export const urlStores = `${API}/api/v0/stores/`
 
 export const upload = (payload) =>
   _post(`${API}/api/v0/upload/`, payload)

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {getImageUrl, getLinkOffer} from "../../routers";
 import {useHistory} from "react-router-dom";
+import * as apiHandle from "../../api/index"
 import Modal from "../Modal";
 import Button from "../Button";
 
@@ -16,7 +17,7 @@ const OfferCard = ({data, style, have}) => {
     {have && <div className="text-white" style={{position: 'absolute', right: 15, top: 5, fontSize: 30}}>
       &#9733;
     </div>}
-    <img src={`/api/v0/stores/?file=offer_${data.id}_promo.jpg`} className="card-img-top" alt="Картинка"
+    <img src={`${apiHandle.urlStores}?file=offer_${data.id}_promo.jpg`} className="card-img-top" alt="Картинка"
          style={{width: '100%', height: 150, borderRadius: 0}}/>
     <div className="card-body" style={{height: 135}}>
       <h5 className="card-title">{data.title}</h5>

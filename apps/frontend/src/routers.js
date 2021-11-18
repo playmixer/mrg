@@ -13,9 +13,11 @@ import Coupons from "./pages/profile/CouponsPage";
 import OfferPage from "./pages/offer";
 import OrganizationPage from "./pages/organization";
 
-const routers = {
+import {Config} from './config'
+
+let routers = {
   auth: {
-    link: "/auth",
+    link: `/auth`,
     title: "Auth",
     page: <Auth/>
   },
@@ -78,7 +80,17 @@ const routers = {
   }
 }
 
-export default routers;
+const subRouters = () => {
+  let res_routers = {}
+  Object.keys(routers).map(v => {
+    res_routers[v] = routers[v]
+    res_routers[v].link = Config.SUBDIRECTORY + routers[v].link
+  })
+
+  return res_routers
+}
+
+export default subRouters();
 
 export const getLink = (page = 'home') => {
   const url = routers[page].link;
@@ -94,13 +106,13 @@ export const getLinkControlOffer = (id) => {
 }
 
 export const getImageUrl = (image) =>
-  `/static/frontend/images/${image}`
+  `${Config.SUBDIRECTORY}/static/frontend/images/${image}`
 
 export const useQuery = () => {
-  const { search } = useLocation();
+  const {search} = useLocation();
 
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
 export const getFileUrl = (filename) =>
-  `/api/v0/stores/?file=${filename}`
+  `${Config.SUBDIRECTORY}/api/v0/stores/?file=${filename}`
