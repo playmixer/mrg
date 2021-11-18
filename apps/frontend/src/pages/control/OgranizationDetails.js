@@ -144,7 +144,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
       {org.title}
     </div>
     <div className="mb-3">
-      <Button onClick={() => history.push("/control/organizations")}>Назад</Button>
+      <Button onClick={() => history.goBack()}>Назад</Button>
     </div>
     <div className="mb-3">
       <Button style={{width: 150}} schema={tab === PT_DETAIL ? 'main-primary' : ''}
