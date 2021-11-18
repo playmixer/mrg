@@ -51,6 +51,7 @@ class OrganizationSchema(BaseModel):
     email: str
     retailer: str
     is_activate: bool
+    balance: float
     users: List[UserSchema]
 
     class Config:

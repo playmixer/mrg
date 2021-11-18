@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-amount_decimal = {
+money_decimal = {
     'decimal_places': 2,
     'max_digits': 10
 }
@@ -18,6 +18,7 @@ class Organization(models.Model):
     email = models.CharField(max_length=200)
     retailer = models.CharField(max_length=200)
     is_activate = models.BooleanField(default=False)
+    balance = models.DecimalField(blank=False, default=0, **money_decimal)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -69,7 +70,7 @@ class Offer(models.Model):
     date_start = models.DateField(blank=False)
     date_end = models.DateField(blank=False)
     scores = models.IntegerField(blank=False, default=0)
-    amount = models.DecimalField(blank=False, default=0, **amount_decimal)
+    amount = models.DecimalField(blank=False, default=0, **money_decimal)
     quantity_per_hand = models.IntegerField(blank=False, default=1)
     client_level = models.IntegerField(blank=False, default=1)
     created_at = models.DateTimeField(auto_now_add=True)

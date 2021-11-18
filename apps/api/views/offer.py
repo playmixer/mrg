@@ -183,6 +183,33 @@ class Offer(APIView):
             }, 400)
 
 
+class CouponActivate(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            data = request.data
+            offer_id = data['offer_id']
+            id = data['id']
+
+            coupon = kuponModels.Coupon.objects.filter(offer_id=offer_id, id=id).first()
+            if coupon is None:
+                raise Exception("Купон не найден")
+
+            coupon.date_activate = datetime.utcnow()
+            coupon.save()
+
+            return Response({
+                'success': True,
+                # 'data': res,
+            })
+        except Exception as err:
+            return Response({
+                'detail': str(err)
+            }, 400)
+
+
 class Coupons(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -209,9 +236,29 @@ class Coupons(APIView):
             data = request.data
             offer_id = data['offer_id']
 
+            offer = kuponModels.Offer.objects.get(id=offer_id)
+
+            coupon_count = data.get('count')
+            if coupon_count is not None:
+                coupon_count = int(coupon_count)
+            else:
+                raise Exception('Не верное значение кол-ва купонов')
+
+            with transaction.atomic():
+
+                for _ in range(coupon_count):
+                    code = str(offer.id).rjust(10, '0') + ClassOffer.generate_code()
+                    c = kuponModels.Coupon(
+                        offer=offer,
+                        code=code
+                    )
+                    c.save()
+
+            res = schemas.CouponsDict.get(kuponModels.Coupon.objects.filter(offer_id=offer.id))
+
             return Response({
                 'success': True,
-                'data': 'res',
+                'data': res,
             })
         except Exception as err:
             return Response({

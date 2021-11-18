@@ -103,11 +103,14 @@ export const offerUpdate = payload =>
 export const offerAddAddress = payload =>
   _post(`${API}/api/v0/offer/address/`, payload)
 
-export const offerBuyCoupon = payload =>
-  _post(`${API}/api/v0/offer/buy/`, payload)
-
 export const offerCreateCoupons = payload =>
   _post(`${API}/api/v0/offer/coupons/`, payload)
 
 export const offerGetCoupons = payload =>
   _get(`${API}/api/v0/offer/coupons/`, payload)
+
+export const offerBuyCoupon = payload =>
+  _post(`${API}/api/v0/offer/coupon/buy/`, payload)
+
+export const offerActivateCoupon = payload =>
+  _post(`${API}/api/v0/offer/coupon/activate/`, payload)

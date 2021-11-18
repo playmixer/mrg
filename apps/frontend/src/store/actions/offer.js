@@ -60,8 +60,27 @@ export const getCoupons = payload => dispatch =>
   apiHandler.offerGetCoupons(payload)
     .then(res => {
       if (res.status === 200 && res.data.success) {
-        dispatch(storeOffer.addAddress(res.data.data))
         // notify('Адреса обновлены', 'success')
+        return res.data.data
+      }
+    })
+    .catch(errorHanding)
+
+export const createCoupons = payload => dispatch =>
+  apiHandler.offerCreateCoupons(payload)
+    .then(res => {
+      if (res.status === 200 && res.data.success) {
+        notify('Купоны созданы', 'success')
+        return res.data.data
+      }
+    })
+    .catch(errorHanding)
+
+export const activateCoupon = payload => dispatch =>
+  apiHandler.offerActivateCoupon(payload)
+    .then(res => {
+      if (res.status === 200 && res.data.success) {
+        notify('Купон активирован', 'success')
         return res.data.data
       }
     })

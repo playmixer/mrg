@@ -8,6 +8,29 @@ from rest_framework.views import APIView
 from .. import schemas
 
 
+class CurrentOrganization(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+
+            data = request.data
+            user = request.user
+
+            print(data)
+            print(user)
+
+            return Response({
+                'success': True,
+                'data': ''
+            })
+        except Exception as err:
+            return Response({
+                'detail': str(err)
+            }, 400)
+
+
 class SearchOrganizations(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
@@ -44,6 +67,7 @@ class Organizations(APIView):
             phone=org.phone,
             retailer=org.retailer,
             is_activate=org.is_activate,
+            balance=org.balance,
             # users=[schemas.UserSchema(id=org.user.id, username=org.user.username) for org in
             #        kuponModels.UserToOrganization.objects.filter(organization_id=org.id)]
             users=[schemas.UserSchema.from_orm(org.user).dict() for org in

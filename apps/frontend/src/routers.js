@@ -11,6 +11,7 @@ import Profile from "./pages/profile";
 import Info from "./pages/profile/Info";
 import Coupons from "./pages/profile/CouponsPage";
 import OfferPage from "./pages/offer";
+import OrganizationPage from "./pages/organization";
 
 const routers = {
   auth: {
@@ -21,7 +22,7 @@ const routers = {
   organization: {
     link: "/organization",
     title: "Партнер",
-    page: <div>organization</div>
+    page: <OrganizationPage/>
   },
   controlOrg: {
     link: "/control/organization/:id",

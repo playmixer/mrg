@@ -1,18 +1,50 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-import {getFileUrl, getLinkOffer} from "../../../routers";
 import {Link} from "react-router-dom";
-import BarCode from "react-barcode";
 import QRCode from "react-qr-code";
+
+import {getFileUrl, getLinkOffer} from "../../../routers";
 
 import ModalComponent from "../../Modal";
 import Button from "../../Button";
+import InputText from "../../inputs/InputText";
+import {notify} from "../../Notification";
 
 
-const Coupon = ({data, className, style}) => {
+const Coupon = ({data, className, style, onActivate}) => {
   const [isShowCode, setIsShowCode] = useState(false);
+  const [isEnterCode, setIsEnterCode] = useState(false)
+  const [code, setCode] = useState('');
 
+  const onEnterCode = () => {
+    if (code == 1941) {
+      setIsEnterCode(true)
+      onActivate(data)
+    } else notify('Код не верный', 'danger')
+  }
 
+  const bodyModal = () => {
+    if (!isEnterCode)
+      return <div className="mb-3">
+        <div>
+          <InputText
+            title={"Введите код торговой точки"}
+            onChange={e => setCode(e.target.value)}
+            value={code}
+          />
+          <Button onClick={onEnterCode}>Ввод</Button>
+        </div>
+        <div className="mb-3">
+          <sub className="text-danger">
+            Внимание: после ввода кода торговой точки, купон будет считаться активированным
+          </sub>
+        </div>
+      </div>
+    return <div className="d-flex justify-content-center align-items-center">
+      <QRCode value={data.code}/>
+    </div>
+  }
+  console.log(data)
   return <CouponComponent
     className={className}
     style={{
@@ -44,16 +76,15 @@ const Coupon = ({data, className, style}) => {
       <Button onClick={() => setIsShowCode(true)} style={{width: 200}}>Посмотреть код</Button>
     </div>
     <div style={{width: 100, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <CouponDetail><Link to={getLinkOffer(data.offer_id)} className="text-decoration-none">&#10132;</Link></CouponDetail>
+      <CouponDetail><Link to={getLinkOffer(data.offer_id)}
+                          className="text-decoration-none">&#10132;</Link></CouponDetail>
     </div>
     <ModalComponent
       show={isShowCode}
       handleClose={() => setIsShowCode(false)}
       data={{
         title: 'QR-код',
-        description: <div className="d-flex justify-content-center align-items-center">
-          <QRCode value={data.code}/>
-        </div>
+        description: bodyModal()
       }}
     />
   </CouponComponent>

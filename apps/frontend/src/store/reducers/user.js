@@ -43,11 +43,18 @@ export const user = createSlice({
         coupons: action.payload
       }
       return state
+    },
+    organization: (state, action) => {
+      state = {
+        ...state
+
+      }
+      return state
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {login, logout, error, cleanError, coupons} = user.actions
+export const {login, logout, error, cleanError, coupons, organization} = user.actions
 
 export default user.reducer

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 
 import * as storeUser from "../../store/actions/user";
+import * as offerAction from "../../store/actions/offer";
 
 import Profile from "./index";
 import Coupon from "../../components/pages/profile/Coupon";
@@ -38,6 +39,13 @@ const CouponsPage = ({dispatch, user}) => {
     getCurrentData(id)
   }
 
+  const onActivate = (data) => {
+    dispatch(offerAction.activateCoupon({
+      offer_id: data.offer_id,
+      id: data.id
+    }))
+  }
+
   useEffect(() => {
     getCoupons()
     getCurrentData(currentNumPage)
@@ -49,7 +57,7 @@ const CouponsPage = ({dispatch, user}) => {
     </div>
     <div>
       {currentData && currentData.map((v, i) => {
-        return <Coupon key={i} data={v} className="mb-3"/>
+        return <Coupon key={i} data={v} onActivate={onActivate} className="mb-3"/>
       })}
     </div>
     <Pagination

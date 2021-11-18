@@ -9,7 +9,6 @@ export const modalActions = {
 
 const ModalComponent = ({data, handleClose, show, onOk, actions, actionsName}) => {
 
-
   return <div>
     <Modal show={show} onHide={handleClose} style={{borderRadius: 0}}>
       <Modal.Header closeButton>
@@ -21,7 +20,7 @@ const ModalComponent = ({data, handleClose, show, onOk, actions, actionsName}) =
           {actionsName?.ok || 'Ok'}
         </Button>}
         <Button onClick={handleClose}>
-          {actionsName?.cancel || 'Close'}
+          {actionsName?.cancel || 'Закрыть'}
         </Button>
       </Modal.Footer>
     </Modal>
