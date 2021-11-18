@@ -6,7 +6,7 @@ import os
 load_dotenv()
 
 SUBDIRECTORY = os.getenv('SUBDIRECTORY', '')
-SUBDIRECTORY = (SUBDIRECTORY[1:] if SUBDIRECTORY.startswith('/') else SUBDIRECTORY) + '/'
+SUBDIRECTORY = SUBDIRECTORY[1:] + '/' if SUBDIRECTORY.startswith('/') else SUBDIRECTORY
 
 urlpatterns = [
     path(SUBDIRECTORY + 'admin/', admin.site.urls),
