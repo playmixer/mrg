@@ -7,24 +7,26 @@ import OrganizationList from "./OrganizationList";
 import Offer from "./Offer";
 import Page404 from "../404";
 
+import {getLink} from "../../routers";
+
 
 const ORGS = 'Партнеры'
 const COUPS = 'Акции'
 
-const tabs = [
-  {
-    name: ORGS,
-    link: '/control/organizations'
-  },
-  {
-    name: COUPS,
-    link: '/control/offers'
-  }
-];
-
 
 const Control = ({user, tab}) => {
   const history = useHistory();
+
+  const tabs = [
+    {
+      name: ORGS,
+      link: getLink('controlOrgs')
+    },
+    {
+      name: COUPS,
+      link: getLink('controlOffers')
+    }
+  ];
 
   if (!user.isAuth || user.roles.indexOf('moderator') < 0)
     return <Page404/>;

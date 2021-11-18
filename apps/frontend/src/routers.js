@@ -15,59 +15,61 @@ import OrganizationPage from "./pages/organization";
 
 import {Config} from './config'
 
-let routers = {
+const SUBDIR = Config.SUBDIRECTORY;
+
+const routers = {
   auth: {
-    link: `/auth`,
+    link: `${SUBDIR}/auth`,
     title: "Auth",
     page: <Auth/>
   },
   organization: {
-    link: "/organization",
+    link: `${SUBDIR}/organization`,
     title: "Партнер",
     page: <OrganizationPage/>
   },
   controlOrg: {
-    link: "/control/organization/:id",
+    link: `${SUBDIR}/control/organization/:id`,
     title: "Управление Организацией",
     page: <OgranizationDetails/>
   },
   controlOffer: {
-    link: "/control/offer/:id",
+    link: `${SUBDIR}/control/offer/:id`,
     title: "Управление акцией",
     page: <OfferDetails/>
   },
   controlOffers: {
-    link: "/control/offers",
+    link: `${SUBDIR}/control/offers`,
     title: "Панель управления",
     page: <Control tab={'Акции'}/>
   },
   controlOrgs: {
-    link: "/control/organizations",
+    link: `${SUBDIR}/control/organizations`,
     title: "Панель управления",
     page: <Control tab={'Партнеры'}/>
   },
   control: {
-    link: "/control",
+    link: `${SUBDIR}/control`,
     title: "Панель управления",
     page: <Control/>
   },
   home: {
-    link: "/home",
+    link: `${SUBDIR}/home`,
     title: "Главная",
     page: <Home/>
   },
   profile: {
-    link: "/profile/info",
+    link: `${SUBDIR}/profile/info`,
     title: "Личный кабинет",
     page: <Info/>
   },
   profileCoupons: {
-    link: "/profile/coupons",
+    link: `${SUBDIR}/profile/coupons`,
     title: "Личный кабинет",
     page: <Coupons/>
   },
   offer: {
-    link: "/offer/:id",
+    link: `${SUBDIR}/offer/:id`,
     title: "Предложение",
     page: <OfferPage/>
   },
@@ -80,17 +82,17 @@ let routers = {
   }
 }
 
-const subRouters = () => {
-  let res_routers = {}
-  Object.keys(routers).map(v => {
-    res_routers[v] = routers[v]
-    res_routers[v].link = Config.SUBDIRECTORY + routers[v].link
-  })
+// const subRouters = () => {
+//   let res_routers = {}
+//   Object.keys(routers).map(v => {
+//     res_routers[v] = routers[v]
+//     res_routers[v].link = Config.SUBDIRECTORY + routers[v].link
+//   })
+//
+//   return res_routers
+// }
 
-  return res_routers
-}
-
-export default subRouters();
+export default routers;
 
 export const getLink = (page = 'home') => {
   const url = routers[page].link;

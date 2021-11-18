@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {getLink} from "../../routers";
 
 const OfferList = ({data}) => {
   const history = useHistory()
@@ -19,7 +20,7 @@ const OfferList = ({data}) => {
         </tr>
         </thead>
         <tbody>
-        {data.map((v, i) => <tr key={i} onClick={() => {history.push('/control/offer/'+v.id)}}>
+        {data.map((v, i) => <tr key={i} onClick={() => {history.push(getLink('controlOffer').replace(':id', v.id))}}>
           <td>{v.title}</td>
           <td>{v.date_start}</td>
           <td>{v.date_end}</td>
