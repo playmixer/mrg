@@ -6,6 +6,9 @@ from apps.kupon import models as kuponModels
 from django.contrib.auth.models import User
 from django.db import transaction
 from rest_framework.views import APIView
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+import os
 from .. import schemas
 from core.classes.offer import Offer as ClassOffer
 from datetime import datetime
@@ -69,10 +72,14 @@ class BuyCoupon(APIView):
             if user_coupon_count >= offer.quantity_per_hand:
                 raise Exception('Приобретено максимальное кол-во купонов в одни руки')
 
-            coupon = coupons_all.filter(user=None).first()
-            coupon.user_id = user.id
-            coupon.date_buy = datetime.utcnow()
-            coupon.save()
+            with transaction.atomic():
+                offer.organization.balance = offer.organization.balance - 3
+                offer.organization.save()
+
+                coupon = coupons_all.filter(user=None).first()
+                coupon.user_id = user.id
+                coupon.date_buy = datetime.now()
+                coupon.save()
 
             return Response({
                 'success': True,
@@ -238,21 +245,41 @@ class Coupons(APIView):
 
             offer = kuponModels.Offer.objects.get(id=offer_id)
 
-            coupon_count = data.get('count')
-            if coupon_count is not None:
-                coupon_count = int(coupon_count)
-            else:
-                raise Exception('Не верное значение кол-ва купонов')
+            type_create = data.get('type')
+            if type_create == 'file':
+                file = request.FILES['file']
 
-            with transaction.atomic():
+                directory = os.path.join(settings.MEDIA_ROOT, 'temporary')
+                filename = datetime.utcnow().strftime('%Y%m%d%H%M%S') + '_coupons.txt'
 
-                for _ in range(coupon_count):
-                    code = str(offer.id).rjust(10, '0') + ClassOffer.generate_code()
-                    c = kuponModels.Coupon(
-                        offer=offer,
-                        code=code
-                    )
-                    c.save()
+                fs = FileSystemStorage(location=directory)
+                if fs.exists(filename):
+                    os.remove(os.path.join(directory, filename))
+                fs.save(filename, file)
+                with open(os.path.join(directory, filename), 'r') as f:
+                    with transaction.atomic():
+                        for line in f:
+                            c = kuponModels.Coupon(
+                                offer=offer,
+                                code=line
+                            )
+                            c.save()
+
+            if type_create == 'default':
+                coupon_count = data.get('count')
+                if coupon_count is not None:
+                    coupon_count = int(coupon_count)
+                else:
+                    raise Exception('Не верное значение кол-ва купонов')
+
+                with transaction.atomic():
+                    for _ in range(coupon_count):
+                        code = str(offer.id).rjust(10, '0') + ClassOffer.generate_code()
+                        c = kuponModels.Coupon(
+                            offer=offer,
+                            code=code
+                        )
+                        c.save()
 
             res = schemas.CouponsDict.get(kuponModels.Coupon.objects.filter(offer_id=offer.id))
 

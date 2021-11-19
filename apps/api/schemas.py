@@ -44,7 +44,7 @@ class SearchOrganizationSchema(BaseModel):
         orm_mode = True
 
 
-class OrganizationSchema(BaseModel):
+class CurrentOrganizationSchema(BaseModel):
     id: int
     title: str
     phone: str
@@ -52,6 +52,12 @@ class OrganizationSchema(BaseModel):
     retailer: str
     is_activate: bool
     balance: float
+
+    class Config:
+        orm_mode = True
+
+
+class OrganizationSchema(CurrentOrganizationSchema):
     users: List[UserSchema]
 
     class Config:

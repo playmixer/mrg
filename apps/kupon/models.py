@@ -93,7 +93,7 @@ class Coupon(models.Model):
         # unique_together = ['offer', 'code']  # уникальность по двум полям
 
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE, blank=False)
-    code = models.CharField(max_length=200)
+    code = models.CharField(max_length=200, unique=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     date_buy = models.DateTimeField(blank=True, default=None, null=True)
     date_activate = models.DateTimeField(blank=True, default=None, null=True)

@@ -14,16 +14,14 @@ class CurrentOrganization(APIView):
 
     def get(self, request):
         try:
-
-            data = request.data
             user = request.user
+            userOrg = kuponModels.UserToOrganization.objects.filter(user=user).first()
 
-            print(data)
-            print(user)
+            res = schemas.CurrentOrganizationSchema.from_orm(userOrg.organization).dict()
 
             return Response({
                 'success': True,
-                'data': ''
+                'data': res
             })
         except Exception as err:
             return Response({
@@ -179,7 +177,8 @@ class UserToOrganizations(APIView):
                 # users=[schemas.UserSchema(id=org.user.id, username=org.user.username) for org in
                 #        kuponModels.UserToOrganization.objects.filter(organization_id=org.id)]
                 users=[schemas.UserSchema.from_orm(org.user).dict() for org in
-                       kuponModels.UserToOrganization.objects.filter(organization_id=org.id)]
+                       kuponModels.UserToOrganization.objects.filter(organization_id=org.id)],
+                balance=org.balance
             ).dict()
 
             return Response({
@@ -223,7 +222,8 @@ class UserToOrganizations(APIView):
                 # users=[schemas.UserSchema(id=org.user.id, username=org.user.username) for org in
                 #        kuponModels.UserToOrganization.objects.filter(organization_id=org.id)]
                 users=[schemas.UserSchema.from_orm(org.user).dict() for org in
-                       kuponModels.UserToOrganization.objects.filter(organization_id=org.id)]
+                       kuponModels.UserToOrganization.objects.filter(organization_id=org.id)],
+                balance=org.balance
             ).dict()
 
             return Response({

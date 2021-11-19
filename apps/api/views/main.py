@@ -22,8 +22,11 @@ class Upload(APIView):
         try:
             data = request.data
             file = request.FILES['file']
+            type_dir = data.get('directory')
+            if type_dir is None:
+                type_dir = 'images'
+            directory = os.path.join(settings.MEDIA_ROOT, type_dir)
 
-            directory = settings.MEDIA_ROOT
             filename = data.get('name')
 
             fs = FileSystemStorage(location=directory)
@@ -50,8 +53,11 @@ class Stores(APIView):
         try:
             data = request.query_params
             filename = data.get('file')
+            type_dir = data.get('directory')
+            if type_dir is None:
+                type_dir = 'images'
 
-            directory = settings.MEDIA_ROOT
+            directory = os.path.join(settings.MEDIA_ROOT, type_dir)
             file = open(os.path.join(directory, filename), 'rb')
 
             return FileResponse(file)
