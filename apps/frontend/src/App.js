@@ -14,7 +14,7 @@ import Notification from "./components/Notification";
 import Layout from "./components/Layout";
 import NavMenu from "./components/NavMenu"
 
-import routers from "./routers"
+import routers, {getLink} from "./routers"
 
 class App extends Component {
   render() {
@@ -23,11 +23,11 @@ class App extends Component {
         <Provider store={store}>
           <BrowserRouter>
             <Layout>
-              <NavMenu routers={routers}/>
+              <NavMenu/>
               <div style={{marginTop: 20}}>
                 <Switch>
                   {Object.keys(routers).map((v, i) =>
-                    <Route path={routers[v].link} key={i}>
+                    <Route path={getLink(v)} key={i}>
                       {routers[v].page}
                     </Route>)}
                 </Switch>

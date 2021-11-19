@@ -25,7 +25,6 @@ const Pagination = ({currentIndex, onPage, countPage, difference = 2, pageSize =
 
   const onPrev = () => {
     onPage(currentIndex - 1 <= 0 ? 1 : currentIndex - 1)
-    onFilterData()
   }
 
 

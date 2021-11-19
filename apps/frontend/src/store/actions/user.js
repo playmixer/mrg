@@ -1,5 +1,6 @@
 import * as apiHandle from '../../api/index';
 import * as userStore from '../reducers/user'
+import {errorHanding} from "../../api/handlers";
 
 export const login = payload => dispatch => {
   apiHandle.authLogin(payload)
@@ -56,3 +57,13 @@ export const coupons = payload => dispatch =>
       }
     })
     .catch(err => console.log(err.message))
+
+export const currentOrganization = (payload) => dispatch =>
+  apiHandle.organizationCurrent(payload)
+    .then(res => {
+      if (res.status === 200 && res.data.success) {
+        dispatch(userStore.currentOrganization(res.data.data))
+        return res.data.data
+      }
+    })
+    .catch(errorHanding)

@@ -19,57 +19,57 @@ const SUBDIR = Config.SUBDIRECTORY;
 
 const routers = {
   auth: {
-    link: `${SUBDIR}/auth`,
+    link: `/auth`,
     title: "Auth",
     page: <Auth/>
   },
   organization: {
-    link: `${SUBDIR}/organization`,
+    link: `/organization`,
     title: "Партнер",
     page: <OrganizationPage/>
   },
   controlOrg: {
-    link: `${SUBDIR}/control/organization/:id`,
+    link: `/control/organization/:id`,
     title: "Управление Организацией",
     page: <OgranizationDetails/>
   },
   controlOffer: {
-    link: `${SUBDIR}/control/offer/:id`,
+    link: `/control/offer/:id`,
     title: "Управление акцией",
     page: <OfferDetails/>
   },
   controlOffers: {
-    link: `${SUBDIR}/control/offers`,
+    link: `/control/offers`,
     title: "Панель управления",
     page: <Control tab={'Акции'}/>
   },
   controlOrgs: {
-    link: `${SUBDIR}/control/organizations`,
+    link: `/control/organizations`,
     title: "Панель управления",
     page: <Control tab={'Партнеры'}/>
   },
   control: {
-    link: `${SUBDIR}/control`,
+    link: `/control`,
     title: "Панель управления",
     page: <Control/>
   },
   home: {
-    link: `${SUBDIR}/home`,
+    link: `/home`,
     title: "Главная",
     page: <Home/>
   },
   profile: {
-    link: `${SUBDIR}/profile/info`,
+    link: `/profile/info`,
     title: "Личный кабинет",
     page: <Info/>
   },
   profileCoupons: {
-    link: `${SUBDIR}/profile/coupons`,
+    link: `/profile/coupons`,
     title: "Личный кабинет",
     page: <Coupons/>
   },
   offer: {
-    link: `${SUBDIR}/offer/:id`,
+    link: `/offer/:id`,
     title: "Предложение",
     page: <OfferPage/>
   },
@@ -95,20 +95,20 @@ const routers = {
 export default routers;
 
 export const getLink = (page = 'home') => {
-  const url = routers[page].link;
+  const url = SUBDIR + routers[page].link;
   return url;
 }
 
 export const getLinkOffer = (id) => {
-  return routers.offer.link.replace(':id', id)
+  return SUBDIR + routers.offer.link.replace(':id', id)
 }
 
 export const getLinkControlOffer = (id) => {
-  return routers.controlOffer.link.replace(':id', id)
+  return SUBDIR + routers.controlOffer.link.replace(':id', id)
 }
 
 export const getImageUrl = (image) =>
-  `${Config.SUBDIRECTORY}/static/frontend/images/${image}`
+  `${SUBDIR}/static/frontend/images/${image}`
 
 export const useQuery = () => {
   const {search} = useLocation();
@@ -117,4 +117,4 @@ export const useQuery = () => {
 }
 
 export const getFileUrl = (filename) =>
-  `${Config.SUBDIRECTORY}/api/v0/stores/?file=${filename}`
+  `${SUBDIR}/api/v0/stores/?file=${filename}`

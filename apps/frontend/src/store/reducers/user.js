@@ -5,6 +5,7 @@ const STORE_NAME = 'auth';
 
 const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {
   isAuth: false,
+  organization: null
 }
 
 export const user = createSlice({
@@ -44,17 +45,16 @@ export const user = createSlice({
       }
       return state
     },
-    organization: (state, action) => {
+    currentOrganization: (state, action) => {
       state = {
-        ...state
-
+        ...state,
+        organization: action.payload
       }
       return state
     }
   },
 })
 
-// Action creators are generated for each case reducer function
-export const {login, logout, error, cleanError, coupons, organization} = user.actions
+export const {login, logout, error, cleanError, coupons, currentOrganization} = user.actions
 
 export default user.reducer

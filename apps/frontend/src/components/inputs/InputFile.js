@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputFile = ({title, value, onChange, readonly = false, name, disabled=false}) => {
+const InputFile = ({title, value, onChange, readonly = false, name, disabled=false, accept=''}) => {
   const handleChange = (e) => {
     console.log(e.target.name)
     onChange && onChange(e)
@@ -16,6 +16,7 @@ const InputFile = ({title, value, onChange, readonly = false, name, disabled=fal
       readOnly={readonly}
       name={name}
       disabled={disabled}
+      accept={accept}
     />
   </div>
 }

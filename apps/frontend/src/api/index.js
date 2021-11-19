@@ -88,6 +88,9 @@ export const organizationRemoveUser = (payload) =>
 export const organizationSearch = (payload) =>
   _get(`${API}/api/v0/organizations/search/`, payload)
 
+export const organizationCurrent = (payload) =>
+  _get(`${API}/api/v0/organization/`, payload)
+
 // User API
 export const userSearch = (payload) =>
   _get(`${API}/api/v0/user/search/`, payload)

@@ -71,7 +71,7 @@ export const createCoupons = payload => dispatch =>
     .then(res => {
       if (res.status === 200 && res.data.success) {
         notify('Купоны созданы', 'success')
-        return res.data.data
+        return res.data
       }
     })
     .catch(errorHanding)

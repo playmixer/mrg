@@ -5,6 +5,10 @@ import styled from "styled-components";
 import * as offerAction from "../../store/actions/offer";
 import Button from "../../components/Button";
 import InputText from "../../components/inputs/InputText";
+import RadioGroup from "../../components/inputs/RadioGroup";
+import InputFile from "../../components/inputs/InputFile";
+import * as apiHandle from "../../api";
+import {notify} from "../../components/Notification";
 
 const coupons_data = {
   count: 0,
@@ -12,13 +16,27 @@ const coupons_data = {
   activated: 0
 }
 
+const options_create_coupon_type = [
+  {
+    title: 'Обычный',
+    value: 'default'
+  },
+  {
+    title: 'Из файла',
+    value: 'file'
+  }
+]
+
+
 const OfferCoupons = ({dispatch, offer, data}) => {
   const [coupons, setCoupons] = useState(coupons_data);
   const [isOpenCreateCoupons, setIsOpenCreateCoupons] = useState(false);
   const [inputForm, setInputForm] = useState({
     offer_id: data.id,
-    count: 100
+    count: 100,
+    type: options_create_coupon_type[0].value
   });
+  const [loadFile, setLoadFile] = useState();
 
   const onChangeForm = (e) => {
     setInputForm({
@@ -28,11 +46,29 @@ const OfferCoupons = ({dispatch, offer, data}) => {
   }
 
   const handleCreateCoupons = () => {
-    dispatch(offerAction.createCoupons(inputForm))
+    const file = loadFile.target.files[0];
+    const form = new FormData();
+    form.append(
+      "file",
+      file,
+      file.name
+    )
+    Object.keys(inputForm).map(v =>
+      form.append(v, inputForm[v])
+    )
+
+    dispatch(offerAction.createCoupons(form))
       .then(res => {
-        setCoupons(res)
-        setIsOpenCreateCoupons(false)
+        if (res.success) {
+          setCoupons(res.data)
+          setIsOpenCreateCoupons(false)
+        }
       })
+  }
+
+  const onChangeCreateType = (e) => {
+    onChangeForm(e)
+
   }
 
   useEffect(() => {
@@ -57,7 +93,15 @@ const OfferCoupons = ({dispatch, offer, data}) => {
         <a href={"#"} onClick={() => setIsOpenCreateCoupons(!isOpenCreateCoupons)}>Создать купоны</a>
       </div>
       {isOpenCreateCoupons && <div>
-        <div>
+        <div className="mb-3">
+          <RadioGroup
+            data={options_create_coupon_type}
+            onChange={onChangeCreateType}
+            name={"type"}
+            checked={inputForm.type}
+          />
+        </div>
+        {inputForm.type === options_create_coupon_type[0].value && <div className="mb-3">
           <InputText
             title={"Количество купонов"}
             name={"count"}
@@ -66,7 +110,14 @@ const OfferCoupons = ({dispatch, offer, data}) => {
             value={inputForm.count}
             onChange={onChangeForm}
           />
-        </div>
+        </div>}
+        {inputForm.type === options_create_coupon_type[1].value && <div className="mb-3">
+          <InputFile
+            title={"Загрузить из файла"}
+            accept={".txt"}
+            onChange={setLoadFile}
+          />
+        </div>}
         <div>
           <Button onClick={handleCreateCoupons}>Создать</Button>
         </div>

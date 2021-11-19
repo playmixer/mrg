@@ -3,10 +3,10 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import * as userHandle from "../store/actions/user";
 
+import routers, {getLink} from "../routers";
 import Button from "./Button";
-import {getLink} from "../routers";
 
-const NavMenu = ({dispatch, user, routers}) => {
+const NavMenu = ({dispatch, user}) => {
 
   const logoutHandle = () => {
     dispatch(userHandle.logout())
@@ -32,15 +32,14 @@ const NavMenu = ({dispatch, user, routers}) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link link-light" to={routers.home.link}>{routers.home.title}</Link>
+              <Link className="nav-link link-light" to={getLink('home')}>{routers.home.title}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link link-light" to={routers.organization.link}>{routers.organization.title}</Link>
+              <Link className="nav-link link-light" to={getLink('organization')}>{routers.organization.title}</Link>
             </li>
             {user.isAuth && user.roles.indexOf('moderator') >= 0 && <li className="nav-item">
-              <Link className="nav-link link-light" to={routers.control.link}>{routers.control.title}</Link>
+              <Link className="nav-link link-light" to={getLink('control')}>{routers.control.title}</Link>
             </li>}
-
           </ul>
           {/*<form className="d-flex">*/}
           {/*    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>*/}
@@ -53,7 +52,7 @@ const NavMenu = ({dispatch, user, routers}) => {
               </Link>
               <Button schema={'light'} onClick={logoutHandle}>Выйти</Button>
             </>
-            : <Link to={routers.auth.link} className="nav-link link-light">Auth</Link>
+            : <Link to={getLink('auth')} className="nav-link link-light">Auth</Link>
           }
         </div>
       </div>

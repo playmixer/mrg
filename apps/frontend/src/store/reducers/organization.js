@@ -3,7 +3,9 @@ import {saveToStorage} from "./utils";
 
 const STORE_NAME = 'organization';
 
-const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {}
+const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {
+  data: [],
+}
 
 
 export const user = createSlice({
