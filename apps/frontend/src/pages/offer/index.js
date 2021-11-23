@@ -80,11 +80,14 @@ console.log(currentOffer)
           <div className="h6">
             Атрибуты
           </div>
-          <div>
+          <div className="mb-3">
             Кол-во купонов в одни руки: <b>{currentOffer.quantity_per_hand}</b>
           </div>
-          <div>
+          <div className="mb-3">
             Необходимый уровень: <b>{currentOffer.client_level}</b>
+          </div>
+          <div className="mb-3">
+            От партнера: <b>{currentOffer.organization.title}</b>
           </div>
         </div>
         <div className="mb-3">

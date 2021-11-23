@@ -66,6 +66,9 @@ export const authLogin = (payload) =>
 export const authLogout = () =>
   _get(`${API}/api/v0/auth/logout/`, {})
 
+export const authRegistration = (payload = {}) =>
+  _post(`${API}/api/v0/auth/registration/`, payload)
+
 export const authState = (payload = {}) =>
   _get(`${API}/api/v0/auth/`)
 

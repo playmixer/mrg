@@ -14,6 +14,7 @@ import OfferPage from "./pages/offer";
 import OrganizationPage from "./pages/organization";
 
 import {Config} from './config'
+console.log('config', Config)
 
 const SUBDIR = Config.SUBDIRECTORY;
 

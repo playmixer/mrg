@@ -52,7 +52,7 @@ const NavMenu = ({dispatch, user}) => {
               </Link>
               <Button schema={'light'} onClick={logoutHandle}>Выйти</Button>
             </>
-            : <Link to={getLink('auth')} className="nav-link link-light">Auth</Link>
+            : <Link to={getLink('auth')} className="nav-link link-light">Войти/Зарегестрироваться</Link>
           }
         </div>
       </div>

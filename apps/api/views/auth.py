@@ -13,6 +13,37 @@ class ExceptionUsernameOrPasswordIncorrect(Exception):
     ...
 
 
+class Registration(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request):
+        try:
+            data = request.data
+
+            username = data.get('username')
+            psw = data.get('password')
+            psw2 = data.get('password2')
+            if username is psw is psw2 is None:
+                raise Exception("Ошибка регистрации")
+
+            if psw != psw2:
+                raise Exception("Пароль не совпадает")
+
+            user = User(username=username)
+            user.set_password(psw)
+            user.save()
+
+            # user = User.
+            return Response({
+                'success': True,
+            })
+        except Exception as err:
+            return Response({
+                'detail': str(err)
+            }, 400)
+
+
 class Auth(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
