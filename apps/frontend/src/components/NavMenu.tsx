@@ -3,10 +3,19 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import * as userHandle from "../store/actions/user";
 
+import {User} from "../types/user";
+
 import routers, {getLink} from "../routers";
 import Button from "./Button";
+import {ROLES} from "../utils/auth";
+import {StoreProps} from "../types/store";
 
-const NavMenu = ({dispatch, user}) => {
+interface Props {
+  dispatch: any
+  user: User
+}
+
+const NavMenu = ({dispatch, user}: Props) => {
 
   const logoutHandle = () => {
     dispatch(userHandle.logout())
@@ -14,6 +23,10 @@ const NavMenu = ({dispatch, user}) => {
 
   const authCheck = () => {
     dispatch(userHandle.check())
+  }
+
+  const isModerator = (user: User) => {
+    return user.roles.indexOf(ROLES.Moderator) >= 0
   }
 
   useEffect(() => {
@@ -37,7 +50,7 @@ const NavMenu = ({dispatch, user}) => {
             <li className="nav-item">
               <Link className="nav-link link-light" to={getLink(routers.organization.name)}>{routers.organization.title}</Link>
             </li>
-            {user.isAuth && user.roles.indexOf('moderator') >= 0 && <li className="nav-item">
+            {user.isAuth && isModerator(user) && <li className="nav-item">
               <Link className="nav-link link-light" to={getLink(routers.control.name)}>{routers.control.title}</Link>
             </li>}
           </ul>
@@ -60,6 +73,7 @@ const NavMenu = ({dispatch, user}) => {
   )
 }
 
-export default connect(state => ({
+
+export default connect((state: StoreProps) => ({
   user: state.user
 }))(NavMenu);

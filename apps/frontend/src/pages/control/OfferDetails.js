@@ -9,11 +9,10 @@ import * as apiHandle from '../../api/index';
 
 import Page404 from "../404";
 import Button from "../../components/Button";
-import {getFileUrl, getLink} from "../../routers";
-import InputText from "../../components/inputs/InputText";
-import InputFile from "../../components/inputs/InputFile";
+import {getFileUrl} from "../../routers";
+import {InputText, InputFile} from "../../components/inputs/";
 import {notify} from "../../components/Notification";
-import InputArea from "../../components/inputs/InputArea";
+import {InputArea} from "../../components/inputs/InputArea";
 import OfferCoupons from "./OfferCoupons";
 
 

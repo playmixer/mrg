@@ -1,7 +1,16 @@
 import React, {useEffect} from "react";
 
-const Pagination = ({currentIndex, onPage, countPage, difference = 2, pageSize = 10, countElements}) => {
-  const onChangePage = (id) => {
+interface Props {
+  currentIndex: number
+  onPage: any
+  countPage: number
+  difference?: number
+  pageSize?: number
+  countElements?: number
+}
+
+const Pagination = ({currentIndex, onPage, countPage, difference = 2, pageSize = 10, countElements = 0}: Props) => {
+  const onChangePage = (id: number) => {
     onPage(id)
   }
 

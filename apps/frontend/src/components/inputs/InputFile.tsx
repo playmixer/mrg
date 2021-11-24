@@ -1,7 +1,17 @@
 import React from "react";
 
-const InputFile = ({title, value, onChange, readonly = false, name, disabled=false, accept=''}) => {
-  const handleChange = (e) => {
+interface Props {
+  title: string
+  value: string
+  onChange: any
+  readonly: boolean
+  name: string
+  disabled: boolean
+  accept: string
+}
+
+export const InputFile = ({title, value, onChange, readonly = false, name, disabled=false, accept=''}: Props) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.name)
     onChange && onChange(e)
   }
@@ -20,5 +30,3 @@ const InputFile = ({title, value, onChange, readonly = false, name, disabled=fal
     />
   </div>
 }
-
-export default InputFile;

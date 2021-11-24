@@ -1,7 +1,17 @@
 import React from "react";
-import InputText from "./InputText";
+import {InputText} from "./InputText";
 
-const RadioGroup = ({data, name, onChange, checked}) => {
+interface Props {
+  data: {
+    value: string
+    title: string
+  }[]
+  name: string
+  onChange: any
+  checked: string
+}
+
+export const RadioGroup = ({data, name, onChange, checked}: Props) => {
 
   return <div>
     {data.map((v, i) => {
@@ -22,4 +32,4 @@ const RadioGroup = ({data, name, onChange, checked}) => {
   </div>
 }
 
-export default RadioGroup;
+// export default RadioGroup;

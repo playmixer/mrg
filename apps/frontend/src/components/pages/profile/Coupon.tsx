@@ -7,17 +7,24 @@ import {getFileUrl, getLinkOffer} from "../../../routers";
 
 import ModalComponent from "../../Modal";
 import Button from "../../Button";
-import InputText from "../../inputs/InputText";
+import {InputText} from "../../inputs/";
 import {notify} from "../../Notification";
+import {Coupons} from "../../../types/offer";
 
+interface PropsCoupon {
+  data: Coupons
+  className: any
+  style: any
+  onActivate: any
+}
 
-const Coupon = ({data, className, style, onActivate}) => {
+const Coupon = ({data, className, style, onActivate}: PropsCoupon) => {
   const [isShowCode, setIsShowCode] = useState(false);
   const [isEnterCode, setIsEnterCode] = useState(false)
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState<string>('');
 
   const onEnterCode = () => {
-    if (code == 1941) {
+    if (code === '1941') {
       setIsEnterCode(true)
       onActivate(data)
     } else notify('Код не верный', 'danger')
@@ -29,10 +36,12 @@ const Coupon = ({data, className, style, onActivate}) => {
         <div>
           <InputText
             title={"Введите код торговой точки"}
-            onChange={e => setCode(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCode(e.target.value)}
             value={code}
-          />
-          <Button onClick={onEnterCode}>Ввод</Button>
+           />
+          <Button
+            onClick={onEnterCode}
+          >Ввод</Button>
         </div>
         <div className="mb-3">
           <sub className="text-danger">

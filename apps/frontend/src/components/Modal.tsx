@@ -3,11 +3,27 @@ import {Modal} from "react-bootstrap";
 
 import Button from "./Button";
 
-export const modalActions = {
+interface PropsActions {
+  OK_CANCEL: number
+}
+
+export const modalActions: PropsActions = {
   OK_CANCEL: 1
 }
 
-const ModalComponent = ({data, handleClose, show, onOk, actions, actionsName}) => {
+interface Props {
+  data: {
+    title: string
+    description: any
+  }
+  handleClose?: any
+  show: boolean
+  onOk?: any
+  actions?: any
+  actionsName?: any
+}
+
+const ModalComponent = ({data, handleClose, show, onOk, actions, actionsName}: Props) => {
 
   return <div>
     <Modal show={show} onHide={handleClose} style={{borderRadius: 0}}>

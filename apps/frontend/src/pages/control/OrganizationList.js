@@ -4,9 +4,8 @@ import {connect} from "react-redux";
 
 
 import Button from "../../components/Button";
-import InputText from "../../components/inputs/InputText";
+import {InputText} from "../../components/inputs/";
 import * as organizationAction from "../../store/actions/organization";
-import Table from "../../components/Table";
 import routers, {getLink} from "../../routers";
 
 const DataList = ({data}) => {

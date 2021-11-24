@@ -1,6 +1,13 @@
 import React from "react";
 
-const NavTabs = ({tabs, onChange, active, className}) => {
+interface Props {
+  tabs: []
+  onChange?: any
+  active: number
+  className: object
+}
+
+const NavTabs = ({tabs, onChange, active, className}: Props) => {
 
   return <ul className={`nav nav-tabs ${className}`}>
     {tabs.map((v, i) => {

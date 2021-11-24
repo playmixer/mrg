@@ -4,9 +4,7 @@ import styled from "styled-components";
 
 import * as offerAction from "../../store/actions/offer";
 import Button from "../../components/Button";
-import InputText from "../../components/inputs/InputText";
-import RadioGroup from "../../components/inputs/RadioGroup";
-import InputFile from "../../components/inputs/InputFile";
+import {InputText, RadioGroup, InputFile} from "../../components/inputs/";
 import * as apiHandle from "../../api";
 import {notify} from "../../components/Notification";
 

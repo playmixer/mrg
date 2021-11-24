@@ -7,7 +7,7 @@ import * as apiHandle from "../api/index";
 import {getLink} from "../routers";
 
 import * as userHandle from '../store/actions/user';
-import InputText from "../components/inputs/InputText";
+import {InputText} from "../components/inputs/";
 import Button from "../components/Button";
 import {notify} from "../components/Notification";
 

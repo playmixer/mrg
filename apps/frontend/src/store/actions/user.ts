@@ -19,7 +19,7 @@ export const login = (payload: {username: string, password: string}) => (dispatc
     })
 }
 
-export const logout = (payload: object) => (dispatch: any) =>
+export const logout = () => (dispatch: any) =>
   apiHandle.authLogout()
     .then((res: RequestResult) => {
       dispatch(userStore.logout())

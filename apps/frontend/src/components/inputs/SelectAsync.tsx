@@ -1,8 +1,15 @@
 import React from 'react';
 import AsyncSelect from "react-select/async";
 
+interface Props {
+  onInputChange: any
+  onChange: any
+  loadOptions: any
+  title: string
+  className: any
+}
 
-const SelectAsync = ({onInputChange, onChange, loadOptions, title, className}) => {
+export const SelectAsync = ({onInputChange, onChange, loadOptions, title, className}: Props) => {
 
 
   return <div className={className}>
@@ -18,5 +25,3 @@ const SelectAsync = ({onInputChange, onChange, loadOptions, title, className}) =
     />
   </div>
 }
-
-export default SelectAsync;

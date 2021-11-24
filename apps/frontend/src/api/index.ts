@@ -6,46 +6,46 @@ const axios = require('axios');
 const API = Config.SUBDIRECTORY
 
 const getCSRF = () => {
-    if (!document.cookie) {
-        return null;
-    }
+  if (!document.cookie) {
+    return null;
+  }
 
-    const xsrfCookies = document.cookie.split(';')
-        .map(c => c.trim())
-        .filter(c => c.startsWith(name + 'csrftoken='));
-    if (xsrfCookies.length === 0) {
-        return null;
-    }
-    return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+  const xsrfCookies = document.cookie.split(';')
+    .map(c => c.trim())
+    .filter(c => c.startsWith(name + 'csrftoken='));
+  if (xsrfCookies.length === 0) {
+    return null;
+  }
+  return decodeURIComponent(xsrfCookies[0].split('=')[1]);
 }
 
 const _request = (url: string, method: string, data: object, headers: object = {}) => {
-    // console.log(headers)
-    return axios({
-        method,
-        url,
-        data,
-        headers: {
-            ...headers,
-        }
-    })
+  // console.log(headers)
+  return axios({
+    method,
+    url,
+    data,
+    headers: {
+      ...headers,
+    }
+  })
 }
 
 const _post = (url: string, data: object, headers: object = {}) =>
-    _request(url, 'post', data, {"X-CSRFToken": getCSRF(), ...headers})
+  _request(url, 'post', data, {"X-CSRFToken": getCSRF(), ...headers})
 
 const _update = (url: string, data: object) =>
-    _request(url, 'put', data, {"X-CSRFToken": getCSRF()})
+  _request(url, 'put', data, {"X-CSRFToken": getCSRF()})
 
 const _delete = (url: string, data: object) =>
-    _request(url, 'delete', data, {"X-CSRFToken": getCSRF()})
+  _request(url, 'delete', data, {"X-CSRFToken": getCSRF()})
 
 const _get = (url: string, data: object = {}) => {
-    const query = Object.keys(data).map(k => {
-        // @ts-ignore
-        return `${[k]}=${data[k]}`
-    }).join('&')
-    return _request(`${url}?${query}`, 'get', {})
+  const query = Object.keys(data).map(k => {
+    // @ts-ignore
+    return `${[k]}=${data[k]}`
+  }).join('&')
+  return _request(`${url}?${query}`, 'get', {})
 }
 
 // Application
@@ -53,74 +53,74 @@ const _get = (url: string, data: object = {}) => {
 export const urlStores = `${API}/api/v0/stores/`
 
 export const upload = (payload: any) =>
-    _post(`${API}/api/v0/upload/`, payload)
+  _post(`${API}/api/v0/upload/`, payload)
 
 // Auth API
-export const authLogin = (payload: {username: string, password: string}) =>
-    _post(`${API}/api/v0/auth/login/`, payload)
-        // .then((res: UserRequest) => {
-        //     return res
-        // })
+export const authLogin = (payload: { username: string, password: string }) =>
+  _post(`${API}/api/v0/auth/login/`, payload)
+// .then((res: UserRequest) => {
+//     return res
+// })
 
 export const authLogout = () =>
-    _get(`${API}/api/v0/auth/logout/`, {})
+  _get(`${API}/api/v0/auth/logout/`, {})
 
-export const authRegistration = (payload: {username: string, password: string, password2: string}) =>
-    _post(`${API}/api/v0/auth/registration/`, payload)
+export const authRegistration = (payload: { username: string, password: string, password2: string }) =>
+  _post(`${API}/api/v0/auth/registration/`, payload)
 
 export const authState = () =>
-    _get(`${API}/api/v0/auth/`)
+  _get(`${API}/api/v0/auth/`)
 
 // Organization API
 export const organizationNew = (payload: any) =>
-    _post(`${API}/api/v0/organizations/`, payload)
+  _post(`${API}/api/v0/organizations/`, payload)
 
 export const organizationList = () =>
-    _get(`${API}/api/v0/organizations/`)
+  _get(`${API}/api/v0/organizations/`)
 
 export const organizationUpdate = (payload: any) =>
-    _update(`${API}/api/v0/organizations/`, payload)
+  _update(`${API}/api/v0/organizations/`, payload)
 
 export const organizationAddUser = (payload: any) =>
-    _post(`${API}/api/v0/organizations/user/`, payload)
+  _post(`${API}/api/v0/organizations/user/`, payload)
 
 export const organizationRemoveUser = (payload: any) =>
-    _delete(`${API}/api/v0/organizations/user/`, payload)
+  _delete(`${API}/api/v0/organizations/user/`, payload)
 
 export const organizationSearch = (payload: any) =>
-    _get(`${API}/api/v0/organizations/search/`, payload)
+  _get(`${API}/api/v0/organizations/search/`, payload)
 
 export const organizationCurrent = (payload: any) =>
-    _get(`${API}/api/v0/organization/`, payload)
+  _get(`${API}/api/v0/organization/`, payload)
 
 // User API
 export const userSearch = (payload: any) =>
-    _get(`${API}/api/v0/user/search/`, payload)
+  _get(`${API}/api/v0/user/search/`, payload)
 
 export const userCoupons = (payload: any) =>
-    _get(`${API}/api/v0/user/coupons/`)
+  _get(`${API}/api/v0/user/coupons/`)
 
 // Offer API
 export const offerList = () =>
-    _get(`${API}/api/v0/offers/`)
+  _get(`${API}/api/v0/offers/`)
 
 export const offerNew = (payload: any) =>
-    _post(`${API}/api/v0/offer/`, payload)
+  _post(`${API}/api/v0/offer/`, payload)
 
 export const offerUpdate = (payload: any) =>
-    _update(`${API}/api/v0/offer/`, payload)
+  _update(`${API}/api/v0/offer/`, payload)
 
 export const offerAddAddress = (payload: any) =>
-    _post(`${API}/api/v0/offer/address/`, payload)
+  _post(`${API}/api/v0/offer/address/`, payload)
 
 export const offerCreateCoupons = (payload: any) =>
-    _post(`${API}/api/v0/offer/coupons/`, payload)
+  _post(`${API}/api/v0/offer/coupons/`, payload)
 
 export const offerGetCoupons = (payload: any) =>
-    _get(`${API}/api/v0/offer/coupons/`, payload)
+  _get(`${API}/api/v0/offer/coupons/`, payload)
 
 export const offerBuyCoupon = (payload: any) =>
-    _post(`${API}/api/v0/offer/coupon/buy/`, payload)
+  _post(`${API}/api/v0/offer/coupon/buy/`, payload)
 
 export const offerActivateCoupon = (payload: any) =>
-    _post(`${API}/api/v0/offer/coupon/activate/`, payload)
+  _post(`${API}/api/v0/offer/coupon/activate/`, payload)

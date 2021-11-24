@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Layout = (props) => {
+interface Props {
+    children: HTMLBodyElement
+}
+
+const Layout = (props: Props) => {
     return (<div className={"container"}>
         {props.children}
     </div>)

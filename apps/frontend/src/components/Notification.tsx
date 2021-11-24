@@ -1,5 +1,5 @@
 import React from "react";
-import ReactNotification, {store} from 'react-notifications-component'
+import ReactNotification, {store, ReactNotificationOptions} from 'react-notifications-component'
 // import style from 'react-notifications-component/dist/theme.css'
 import styled, {} from 'styled-components'
 
@@ -41,8 +41,8 @@ const NotifyContent = styled.div`
   }
 `
 
-export const notify = (message, type = 'default') => {
-  const notification = {
+export const notify = (message: string, type: 'success'|'danger'|'info'|'default'|'warning' = 'default') => {
+  const notification: ReactNotificationOptions = {
     insert: "bottom",
     container: "top-right",
     type,

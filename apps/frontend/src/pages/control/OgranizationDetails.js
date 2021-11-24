@@ -11,7 +11,7 @@ import * as actionUser from '../../store/actions/user';
 
 import Button from "../../components/Button";
 import Notification from "../../components/Notification";
-import SelectAsync from "../../components/inputs/SelectAsync"
+import {SelectAsync} from "../../components/inputs/"
 
 
 const formInputs = [

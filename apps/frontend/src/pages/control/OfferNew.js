@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import InputText from "../../components/inputs/InputText";
-import SelectAsync from "../../components/inputs/SelectAsync";
+import {InputText} from "../../components/inputs/";
+import {SelectAsync} from "../../components/inputs/";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 
