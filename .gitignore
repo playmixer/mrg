@@ -6,3 +6,4 @@ env
 .env
 upload
 apps/frontend/src/react-app-env.d.ts
+apps/frontend/static/frontend/main.js
