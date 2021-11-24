@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import * as userAction from "../store/actions/user";
 import * as offerAction from "../store/actions/offer";
 
-import {getLink, useQuery} from "../routers"
+import routers, {getLink, useQuery} from "../routers"
 
 import OfferCard from "../components/pages/OfferCard";
 import Pagination from "../components/Pagination";
@@ -43,7 +43,7 @@ const Home = ({dispatch, offer, user}) => {
 
   useEffect(() => {
     dispatch(offerAction.list())
-    history.push(`${getLink('home')}?page=${pageNum}`)
+    history.push(`${getLink(routers.home.name)}?page=${pageNum}`)
     if (user.isAuth)
       getUserCoupons()
 

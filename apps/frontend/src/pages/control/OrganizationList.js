@@ -7,7 +7,7 @@ import Button from "../../components/Button";
 import InputText from "../../components/inputs/InputText";
 import * as organizationAction from "../../store/actions/organization";
 import Table from "../../components/Table";
-import {getLink} from "../../routers";
+import routers, {getLink} from "../../routers";
 
 const DataList = ({data}) => {
   const history = useHistory()
@@ -27,7 +27,7 @@ const DataList = ({data}) => {
       {
         data && data.map((v, i) => {
           return (
-            <tr key={i} onClick={() => history.push(getLink('controlOrg').replace(':id', v.id))}>
+            <tr key={i} onClick={() => history.push(getLink(routers.controlOrg.name).replace(':id', v.id))}>
               <td>{v.title}</td>
               <td>{v.phone}</td>
               <td>{v.email}</td>

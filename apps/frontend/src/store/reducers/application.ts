@@ -3,7 +3,11 @@ import {saveToStorage} from "./utils";
 
 const STORE_NAME = 'app';
 
-const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {
+interface StateInterface {
+  isLoading: boolean
+}
+
+const initialState: StateInterface = localStorage.getItem(STORE_NAME) ? JSON.parse(<string>localStorage.getItem(STORE_NAME)) : {
   isLoading: false,
 }
 
@@ -11,7 +15,7 @@ export const applicastion = createSlice({
   name: STORE_NAME,
   initialState,
   reducers: {
-    loading: (state, action) => {
+    loading: (state: StateInterface, action) => {
       state = {
         ...state,
         isLoading: true

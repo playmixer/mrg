@@ -32,13 +32,13 @@ const NavMenu = ({dispatch, user}) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link link-light" to={getLink('home')}>{routers.home.title}</Link>
+              <Link className="nav-link link-light" to={getLink(routers.home.name)}>{routers.home.title}</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link link-light" to={getLink('organization')}>{routers.organization.title}</Link>
+              <Link className="nav-link link-light" to={getLink(routers.organization.name)}>{routers.organization.title}</Link>
             </li>
             {user.isAuth && user.roles.indexOf('moderator') >= 0 && <li className="nav-item">
-              <Link className="nav-link link-light" to={getLink('control')}>{routers.control.title}</Link>
+              <Link className="nav-link link-light" to={getLink(routers.control.name)}>{routers.control.title}</Link>
             </li>}
           </ul>
           {/*<form className="d-flex">*/}
@@ -47,12 +47,12 @@ const NavMenu = ({dispatch, user}) => {
           {/*</form>*/}
           {user.isAuth
             ? <>
-              <Link className="nav-link link-light" to={getLink('profile')}>
+              <Link className="nav-link link-light" to={getLink(routers.profile.name)}>
                 <span className="text-light" style={{marginRight: 5}}>Пользователь: {user.username}</span>
               </Link>
               <Button schema={'light'} onClick={logoutHandle}>Выйти</Button>
             </>
-            : <Link to={getLink('auth')} className="nav-link link-light">Войти/Зарегестрироваться</Link>
+            : <Link to={getLink(routers.auth.name)} className="nav-link link-light">Войти/Зарегестрироваться</Link>
           }
         </div>
       </div>

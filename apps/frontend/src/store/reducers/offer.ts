@@ -1,13 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {saveToStorage} from "./utils";
+import {Offer} from "../../types/offer";
 
 const STORE_NAME = 'offer';
 
-const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {
+interface StateInterface {
+  data: Offer[]
+}
+
+const initialState: StateInterface = localStorage.getItem(STORE_NAME) ? JSON.parse(<string>localStorage.getItem(STORE_NAME)) : {
   data: [],
 }
 
-const save = (state) =>
+const save = (state: StateInterface) =>
   saveToStorage(state, STORE_NAME)
 
 
@@ -15,7 +20,7 @@ export const offer = createSlice({
   name: STORE_NAME,
   initialState,
   reducers: {
-    list: (state, action) => {
+    list: (state: StateInterface, action) => {
       state = {
         ...state,
         data: [
@@ -25,7 +30,7 @@ export const offer = createSlice({
       save(state)
       return state
     },
-    add: (state, action) => {
+    add: (state: StateInterface, action) => {
       state = {
         ...state,
         data: [
@@ -36,8 +41,8 @@ export const offer = createSlice({
       save(state)
       return state
     },
-    update: (state, action) => {
-      let data = state.data.map(v => {
+    update: (state: StateInterface, action) => {
+      let data = state.data.map((v) => {
         return v.id === action.payload.id ? action.payload : v;
       })
       state = {
@@ -49,7 +54,7 @@ export const offer = createSlice({
       save(state)
       return state
     },
-    addAddress: (state, action) => {
+    addAddress: (state: StateInterface, action) => {
       let data = state.data.map(v => {
         return v.id === action.payload.id ? action.payload : v;
       })

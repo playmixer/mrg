@@ -1,9 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {saveToStorage} from "./utils";
+import {Coupons} from "../../types/offer";
+import {Organization} from "../../types/orgranization";
 
-const STORE_NAME = 'auth';
+const STORE_NAME: string = 'auth';
 
-const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {
+interface StateInterface {
+  isAuth: boolean
+  organization?: Organization
+  error?: string
+  coupons?: Coupons[]
+}
+
+const initialState: StateInterface = localStorage.getItem(STORE_NAME) ? JSON.parse(<string>localStorage.getItem(STORE_NAME)) : {
   isAuth: false,
   organization: null
 }
@@ -12,7 +21,7 @@ export const user = createSlice({
   name: STORE_NAME,
   initialState,
   reducers: {
-    login: (state, action) => {
+    login: (state: StateInterface, action) => {
       state = {
         ...state,
         ...action.payload
@@ -20,14 +29,14 @@ export const user = createSlice({
       saveToStorage(state, STORE_NAME)
       return state
     },
-    logout: (state) => {
+    logout: (state: StateInterface) => {
       state = {
         isAuth: false
       }
       saveToStorage(state, STORE_NAME)
       return state
     },
-    error: (state, action) => {
+    error: (state: StateInterface, action) => {
       state = {
         ...state,
         error: action.payload

@@ -1,9 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {saveToStorage} from "./utils";
+import {Organization} from "../../types/orgranization";
 
 const STORE_NAME = 'organization';
 
-const initialState = localStorage.getItem(STORE_NAME) ? JSON.parse(localStorage.getItem(STORE_NAME)) : {
+interface StateInterface {
+  data: Organization[]
+}
+
+const initialState: StateInterface = localStorage.getItem(STORE_NAME) ? JSON.parse(<string>localStorage.getItem(STORE_NAME)) : {
   data: [],
 }
 
@@ -22,7 +27,7 @@ export const user = createSlice({
       saveToStorage(state, STORE_NAME)
       return state
     },
-    add: (state, action) => {
+    add: (state: StateInterface, action) => {
       state = {
         ...state,
         data: [
@@ -33,7 +38,7 @@ export const user = createSlice({
       saveToStorage(state, STORE_NAME)
       return state
     },
-    update: (state, action) => {
+    update: (state: StateInterface, action) => {
       state = {
         ...state,
         ...action.payload
@@ -41,7 +46,7 @@ export const user = createSlice({
 
       return state
     },
-    addUser: (state, action) => {
+    addUser: (state: StateInterface, action) => {
       state = {
         ...state,
         data: [
@@ -50,7 +55,7 @@ export const user = createSlice({
       }
       return state
     },
-    removeUser: (state, action) => {
+    removeUser: (state: StateInterface, action) => {
       state = {
         ...state,
         data: [
@@ -62,7 +67,6 @@ export const user = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const {list, add, update, addUser, removeUser} = user.actions
 
 export default user.reducer

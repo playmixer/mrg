@@ -7,7 +7,7 @@ import OrganizationList from "./OrganizationList";
 import Offer from "./Offer";
 import Page404 from "../404";
 
-import {getLink} from "../../routers";
+import routers, {getLink} from "../../routers";
 
 
 const ORGS = 'Партнеры'
@@ -20,11 +20,11 @@ const Control = ({user, tab}) => {
   const tabs = [
     {
       name: ORGS,
-      link: getLink('controlOrgs')
+      link: getLink(routers.controlOrgs.name)
     },
     {
       name: COUPS,
-      link: getLink('controlOffers')
+      link: getLink(routers.controlOffers.name)
     }
   ];
 

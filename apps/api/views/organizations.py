@@ -18,6 +18,8 @@ class CurrentOrganization(APIView):
             userOrg = kuponModels.UserToOrganization.objects.filter(user=user).first()
 
             res = schemas.CurrentOrganizationSchema.from_orm(userOrg.organization).dict()
+            offers = kuponModels.Offer.objects.filter(organization_id=userOrg.organization.id)
+            res['offers'] = [schemas.OfferSchema.from_orm(offer).dict() for offer in offers]
 
             return Response({
                 'success': True,

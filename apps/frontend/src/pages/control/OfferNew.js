@@ -4,7 +4,7 @@ import SelectAsync from "../../components/inputs/SelectAsync";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 
-import {getLink} from "../../routers";
+import routers, {getLink} from "../../routers";
 
 import * as apiHandler from "../../api";
 import * as actionOffer from "../../store/actions/offer";
@@ -29,7 +29,7 @@ const OfferNew = ({dispatch}) => {
     dispatch(actionOffer.add(inputsValue))
       .then(res => {
         const id = res.id;
-        history.push(getLink('controlOffer').replace(':id', id));
+        history.push(getLink(routers.controlOffer.name).replace(':id', id));
       })
   }
 

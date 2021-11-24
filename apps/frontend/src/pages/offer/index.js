@@ -4,7 +4,7 @@ import {Link, useParams, useHistory} from "react-router-dom";
 
 import {YMaps, Map, Placemark} from "react-yandex-maps";
 
-import {getFileUrl, getLink, getLinkControlOffer} from "../../routers";
+import routers, {getFileUrl, getLink, getLinkControlOffer} from "../../routers";
 import * as actionOffer from "../../store/actions/offer"
 
 import Button from "../../components/Button";
@@ -99,7 +99,7 @@ console.log(currentOffer)
         <div className="mb-3">
           {user.isAuth
             ? <Button schema="main-primary" onClick={handleModalBuyCoupon}>Получить купон</Button>
-            : <span>Для покупки необходимо <Link to={getLink('auth')} className="link-primary">авторизироваться</Link>
+            : <span>Для покупки необходимо <Link to={getLink(routers.auth.name)} className="link-primary">авторизироваться</Link>
         </span>}
         </div>
       </div>

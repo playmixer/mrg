@@ -20,56 +20,67 @@ const SUBDIR = Config.SUBDIRECTORY;
 
 const routers = {
   auth: {
+    name: 'auth',
     link: `/auth`,
     title: "Auth",
     page: <Auth/>
   },
   organization: {
+    name: 'organization',
     link: `/organization`,
     title: "Партнер",
     page: <OrganizationPage/>
   },
   controlOrg: {
+    name: 'controlOrg',
     link: `/control/organization/:id`,
     title: "Управление Организацией",
     page: <OgranizationDetails/>
   },
   controlOffer: {
+    name: 'controlOffer',
     link: `/control/offer/:id`,
     title: "Управление акцией",
     page: <OfferDetails/>
   },
   controlOffers: {
+    name: 'controlOffers',
     link: `/control/offers`,
     title: "Панель управления",
     page: <Control tab={'Акции'}/>
   },
   controlOrgs: {
+    name: 'controlOrgs',
     link: `/control/organizations`,
     title: "Панель управления",
     page: <Control tab={'Партнеры'}/>
   },
   control: {
+    name: 'control',
     link: `/control`,
     title: "Панель управления",
     page: <Control/>
   },
   home: {
+    name: 'home',
     link: `/home`,
     title: "Главная",
     page: <Home/>
   },
   profile: {
+    name: 'profile',
     link: `/profile/info`,
     title: "Личный кабинет",
     page: <Info/>
   },
   profileCoupons: {
+    name: 'profileCoupons',
     link: `/profile/coupons`,
     title: "Личный кабинет",
     page: <Coupons/>
   },
   offer: {
+    name: 'offer',
     link: `/offer/:id`,
     title: "Предложение",
     page: <OfferPage/>
@@ -77,6 +88,7 @@ const routers = {
 
   //Должна быть в конце
   page404: {
+    name: 'page404',
     link: "*",
     title: "404",
     page: <Page404/>

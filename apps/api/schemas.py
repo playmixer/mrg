@@ -94,6 +94,7 @@ class OfferSchema(BaseModel):
     client_level: int
     image_promo: Optional[str]
     addresses: Optional[list]
+    is_activate: bool
 
     class Config:
         orm_mode = True

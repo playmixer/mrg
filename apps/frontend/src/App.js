@@ -8,6 +8,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import styled from "styled-components"
 
 import Notification from "./components/Notification";
 
@@ -16,10 +17,14 @@ import NavMenu from "./components/NavMenu"
 
 import routers, {getLink} from "./routers"
 
+const DivContainer = styled.div`
+color: black;
+`;
+
 class App extends Component {
   render() {
     return (
-      <div>
+      <DivContainer>
         <Provider store={store}>
           <BrowserRouter>
             <Layout>
@@ -36,10 +41,11 @@ class App extends Component {
           </BrowserRouter>
         </Provider>
         <Notification/>
-      </div>
+      </DivContainer>
     );
   }
 }
+
 
 export default App;
 

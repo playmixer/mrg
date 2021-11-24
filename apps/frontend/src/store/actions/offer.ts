@@ -3,19 +3,21 @@ import * as apiHandler from '../../api/index';
 import {errorHanding} from "../../api/handlers";
 
 import {notify} from '../../components/Notification';
+import {RequestResult} from "../../types/request";
 
-export const list = payload => dispatch =>
+
+export const list = () => (dispatch: any) =>
   apiHandler.offerList()
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         dispatch(storeOffer.list(res.data.data))
       }
     })
     .catch(errorHanding)
 
-export const add = payload => dispatch =>
+export const add = (payload: object) => (dispatch: any) =>
   apiHandler.offerNew(payload)
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         dispatch(storeOffer.add(res.data.data))
         notify('Акция добалена', 'success')
@@ -24,9 +26,9 @@ export const add = payload => dispatch =>
     })
     .catch(errorHanding)
 
-export const update = payload => dispatch =>
+export const update = (payload: object) => (dispatch: any) =>
   apiHandler.offerUpdate(payload)
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         notify('Акция обновлена', 'success')
         dispatch(storeOffer.update(res.data.data))
@@ -35,9 +37,9 @@ export const update = payload => dispatch =>
     })
     .catch(errorHanding)
 
-export const buy = payload => dispatch =>
+export const buy = (payload: object) => (dispatch: any) =>
   apiHandler.offerBuyCoupon(payload)
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         notify('Купон куплен', 'success')
 
@@ -45,9 +47,9 @@ export const buy = payload => dispatch =>
     })
     .catch(errorHanding)
 
-export const addAddress = payload => dispatch =>
+export const addAddress = (payload: object) => (dispatch: any) =>
   apiHandler.offerAddAddress(payload)
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         dispatch(storeOffer.addAddress(res.data.data))
         notify('Адреса обновлены', 'success')
@@ -56,9 +58,9 @@ export const addAddress = payload => dispatch =>
     })
     .catch(errorHanding)
 
-export const getCoupons = payload => dispatch =>
+export const getCoupons = (payload: object) => (dispatch: any) =>
   apiHandler.offerGetCoupons(payload)
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         // notify('Адреса обновлены', 'success')
         return res.data.data
@@ -66,9 +68,9 @@ export const getCoupons = payload => dispatch =>
     })
     .catch(errorHanding)
 
-export const createCoupons = payload => dispatch =>
+export const createCoupons = (payload: object) => (dispatch: any) =>
   apiHandler.offerCreateCoupons(payload)
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         notify('Купоны созданы', 'success')
         return res.data
@@ -76,9 +78,9 @@ export const createCoupons = payload => dispatch =>
     })
     .catch(errorHanding)
 
-export const activateCoupon = payload => dispatch =>
+export const activateCoupon = (payload: object) => (dispatch: any) =>
   apiHandler.offerActivateCoupon(payload)
-    .then(res => {
+    .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         notify('Купон активирован', 'success')
         return res.data.data

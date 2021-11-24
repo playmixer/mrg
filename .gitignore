@@ -5,3 +5,4 @@ env
 **/__pycache__/**
 .env
 upload
+apps/frontend/src/react-app-env.d.ts
