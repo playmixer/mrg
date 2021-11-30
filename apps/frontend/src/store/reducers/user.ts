@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {saveToStorage} from "./utils"
-import {UserStoreProps} from "../../@types/store";
 
 const STORE_NAME: string = 'auth';
 

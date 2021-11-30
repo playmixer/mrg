@@ -1,6 +1,3 @@
-import {Organization} from "./orgranization";
-import {Coupons, Offer} from "./offer";
-
 interface OfferStoreProps {
   data: Offer[]
 }
@@ -14,7 +11,7 @@ interface UserStoreProps {
   username?: string
   organization?: Organization
   error?: string
-  coupons?: Coupons[]|undefined
+  coupons?: Coupon[]|undefined
   roles?: string[]
 }
 

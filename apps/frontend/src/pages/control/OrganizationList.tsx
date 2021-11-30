@@ -7,8 +7,6 @@ import Button from "../../components/Button";
 import {InputText} from "../../components/inputs/";
 import * as organizationAction from "../../store/actions/organization";
 import routers, {getLink} from "../../routers";
-import {Organization} from "../../@types/orgranization";
-import {OrganizationStoreProps, StoreProps} from "../../@types/store";
 
 interface PropsDetail {
   data: Organization[]

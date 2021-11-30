@@ -1,5 +1,3 @@
-import {UserStoreProps} from "./store";
-
 interface User {
   id: string
   username: string

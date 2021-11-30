@@ -12,10 +12,10 @@ import {notify} from "../../Notification";
 
 import {colors} from "../../../style/colors";
 
-import PropsOffer from "../../../@types/offer";
+
 
 interface PropsCoupon {
-  data: PropsOffer.Coupon
+  data: Coupon
   className?: any
   style?: any
   onActivate: any

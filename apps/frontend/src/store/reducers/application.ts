@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {saveToStorage} from "./utils";
-import {StoreApplicationProps} from "../../@types/store";
 
 const STORE_NAME = 'app';
 

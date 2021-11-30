@@ -9,8 +9,7 @@ import routers, {getLink, useQuery} from "../routers"
 
 import OfferCard from "../components/pages/OfferCard";
 import Pagination from "../components/Pagination";
-import {OfferStoreProps, StoreApplicationProps, StoreProps, UserStoreProps} from "../@types/store";
-import {Offer, OfferAddress} from "../@types/offer";
+
 
 interface Props {
   dispatch

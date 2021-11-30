@@ -6,8 +6,6 @@ import * as offerAction from "../../store/actions/offer";
 import Button from "../../components/Button";
 import {InputText, RadioGroup, InputFile} from "../../components/inputs/";
 
-import {OfferStoreProps, StoreProps} from "../../@types/store";
-import {Offer} from "../../@types/offer";
 
 
 interface PropsCouponsData {

@@ -10,9 +10,6 @@ import Page404 from "../404";
 import Button from "../../components/Button";
 import {SelectAsync} from "../../components/inputs/"
 
-import {OrganizationStoreProps, StoreProps, UserStoreProps} from "../../@types/store";
-import {User} from "../../@types/user";
-import {Organization} from "../../@types/orgranization";
 
 
 const formInputs = [

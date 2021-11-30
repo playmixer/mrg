@@ -5,7 +5,6 @@ import * as apiHandle from "../../api/index"
 import Modal from "../Modal";
 import Button from "../Button";
 import styled from "styled-components";
-import {Offer} from "../../@types/offer";
 import {colors} from "../../style/colors";
 
 interface Props {

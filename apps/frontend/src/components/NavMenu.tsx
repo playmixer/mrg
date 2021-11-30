@@ -8,8 +8,6 @@ import routers, {getLink} from "../routers";
 import Button from "./Button";
 import {ROLES} from "../utils/auth";
 
-import {StoreApplicationProps, StoreProps, UserStoreProps} from "../@types/store";
-
 import ModalComponent from "./Modal";
 
 interface Props {

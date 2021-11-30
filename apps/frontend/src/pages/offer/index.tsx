@@ -10,8 +10,7 @@ import * as actionOffer from "../../store/actions/offer"
 import Button from "../../components/Button";
 import ModalComponent, {modalActions} from "../../components/Modal";
 import Page404 from "../404";
-import {StoreProps} from "../../@types/store";
-import {Offer} from "../../@types/offer";
+
 
 
 const OfferPage = ({dispatch, user, offer}) => {

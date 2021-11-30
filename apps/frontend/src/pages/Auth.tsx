@@ -10,7 +10,7 @@ import * as userHandle from '../store/actions/user';
 import {InputText} from "../components/inputs/";
 import Button from "../components/Button";
 import {notify} from "../components/Notification";
-import {StoreProps} from "../@types/store";
+
 
 const tabs = {
   auth: 0,

@@ -11,8 +11,7 @@ import * as actionOffer from "../../store/actions/offer";
 
 import Button from "../../components/Button";
 import {notify} from "../../components/Notification";
-import {Offer} from "../../@types/offer";
-import {Organization} from "../../@types/orgranization";
+
 
 interface Props {
   dispatch: any

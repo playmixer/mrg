@@ -5,7 +5,7 @@ import * as userAction from "../../store/actions/user";
 
 import Page404 from "../404";
 import styled from "styled-components";
-import {StoreProps} from "../../@types/store";
+
 
 const OrganizationPage = ({dispatch, user}) => {
 

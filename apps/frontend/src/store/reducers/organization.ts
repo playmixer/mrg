@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {saveToStorage} from "./utils";
-import {Organization} from "../../@types/orgranization";
 
 
 const STORE_NAME = 'organization';

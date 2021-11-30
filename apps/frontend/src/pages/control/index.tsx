@@ -8,7 +8,7 @@ import Offer from "./Offer";
 import Page404 from "../404";
 
 import routers, {getLink} from "../../routers";
-import {StoreProps, UserStoreProps} from "../../@types/store";
+
 
 
 const ORGS = 'Партнеры'

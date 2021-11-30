@@ -1,5 +1,3 @@
-import {User} from "./user";
-
 interface Organization {
   id: string
   title: string

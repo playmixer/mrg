@@ -1,5 +1,3 @@
-import {Organization} from "./orgranization";
-
 interface OfferAddress {
   value?: string
   geo_lat: string

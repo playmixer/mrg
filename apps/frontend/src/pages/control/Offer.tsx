@@ -5,13 +5,12 @@ import * as offerAction from '../../store/actions/offer';
 import Button from "../../components/Button";
 import OfferList from "./OfferList";
 import OfferNew from "./OfferNew";
-import {Offer as OfferProps} from "../../@types/offer";
-import {StoreProps} from "../../@types/store";
+
 
 interface Props {
   dispatch: any
   offer: {
-    data: OfferProps[]
+    data: Offer[]
   }
 }
 

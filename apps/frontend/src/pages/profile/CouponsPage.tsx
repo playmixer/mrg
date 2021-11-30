@@ -7,8 +7,7 @@ import * as offerAction from "../../store/actions/offer";
 import Profile from "./index";
 import Coupon from "../../components/pages/profile/Coupon";
 import Pagination from "../../components/Pagination";
-import {StoreProps} from "../../@types/store";
-import PropsOffer from "../../@types/offer";
+
 
 
 const CouponsPage = ({dispatch, user}) => {

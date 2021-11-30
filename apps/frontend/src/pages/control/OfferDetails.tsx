@@ -15,9 +15,6 @@ import {notify} from "../../components/Notification";
 import {InputArea} from "../../components/inputs/InputArea";
 import OfferCoupons from "./OfferCoupons";
 
-import {Offer, OfferAddress} from "../../@types/offer";
-import {OfferStoreProps, StoreProps} from "../../@types/store";
-import {Organization} from "../../@types/orgranization";
 
 
 const T_DETAIL = 0;
