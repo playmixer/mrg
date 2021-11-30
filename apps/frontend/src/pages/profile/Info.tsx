@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import Profile from "./index";
+import {StoreProps} from "../../@types/store";
 
 const Info = ({user}) => {
 
@@ -22,6 +23,6 @@ const Info = ({user}) => {
   </Profile>
 }
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   user: state.user
 }))(Info)

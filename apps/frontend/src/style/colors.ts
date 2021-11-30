@@ -1,8 +1,4 @@
-interface PropsColors {
-
-}
-
-export const colors: any = {
+export const colors = {
   bsBlue: '#0d6efd',
   bsIndigo: '#6610f2',
   bsPurple: '#6f42c1',

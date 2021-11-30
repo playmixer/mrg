@@ -10,17 +10,24 @@ import * as userHandle from '../store/actions/user';
 import {InputText} from "../components/inputs/";
 import Button from "../components/Button";
 import {notify} from "../components/Notification";
+import {StoreProps} from "../@types/store";
 
 const tabs = {
   auth: 0,
   reg: 1
 }
 
+interface PropsFormCreateUser {
+  username: string
+  password: string
+  password2: string
+}
+
 const Auth = ({dispatch, user}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [currentTab, setCurrentTab] = useState(tabs.auth);
-  const [regForm, setRegForm] = useState({})
+  const [regForm, setRegForm] = useState<PropsFormCreateUser>({password: "", password2: "", username: ""})
 
   const history = useHistory();
 
@@ -129,6 +136,6 @@ const Auth = ({dispatch, user}) => {
   </div>
 }
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   user: state.user
 }))(Auth);

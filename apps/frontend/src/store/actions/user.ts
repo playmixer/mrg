@@ -60,8 +60,8 @@ export const coupons = () => (dispatch: any) =>
     })
     .catch(errorHanding)
 
-export const currentOrganization = (payload: object) => (dispatch: any) =>
-  apiHandle.organizationCurrent(payload)
+export const currentOrganization = () => (dispatch: any) =>
+  apiHandle.organizationCurrent()
     .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         dispatch(userStore.currentOrganization(res.data.data))

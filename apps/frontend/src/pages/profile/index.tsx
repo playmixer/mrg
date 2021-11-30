@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import SideMenu from "../../components/pages/profile/SideMenu";
 import Page404 from "../404";
+import {StoreProps} from "../../@types/store";
 
 const Profile = ({children, user}) => {
   if (!user.isAuth) return <Page404/>
@@ -22,6 +23,6 @@ const Profile = ({children, user}) => {
   </div>
 }
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   user: state.user
 }))(Profile)

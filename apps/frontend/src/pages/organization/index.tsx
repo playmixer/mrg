@@ -1,12 +1,11 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 
-import {ROLES} from "../../utils/auth";
 import * as userAction from "../../store/actions/user";
 
 import Page404 from "../404";
 import styled from "styled-components";
-import OfferCard from "../../components/pages/OfferCard";
+import {StoreProps} from "../../@types/store";
 
 const OrganizationPage = ({dispatch, user}) => {
 
@@ -76,6 +75,6 @@ const BlockSide = styled.div`
   }
 `
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   user: state.user,
 }))(OrganizationPage);

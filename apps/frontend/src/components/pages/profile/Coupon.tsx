@@ -12,12 +12,12 @@ import {notify} from "../../Notification";
 
 import {colors} from "../../../style/colors";
 
-import {Coupons} from "../../../@types/offer";
+import PropsOffer from "../../../@types/offer";
 
 interface PropsCoupon {
-  data: Coupons
-  className: any
-  style: any
+  data: PropsOffer.Coupon
+  className?: any
+  style?: any
   onActivate: any
 }
 

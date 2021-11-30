@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 interface Props {
   currentIndex: number
   onPage: any
-  countPage: number
+  countPage?: number
   difference?: number
   pageSize?: number
   countElements?: number

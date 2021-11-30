@@ -7,12 +7,14 @@ import * as offerAction from "../../store/actions/offer";
 import Profile from "./index";
 import Coupon from "../../components/pages/profile/Coupon";
 import Pagination from "../../components/Pagination";
+import {StoreProps} from "../../@types/store";
+import PropsOffer from "../../@types/offer";
 
 
 const CouponsPage = ({dispatch, user}) => {
   const pageSize = 10;
   const [currentNumPage, setCurrentNumPage] = useState(1)
-  const [currentData, setCurrentData] = useState([])
+  const [currentData, setCurrentData] = useState<any>([])
 
 
   const getCoupons = () => {
@@ -25,7 +27,7 @@ const CouponsPage = ({dispatch, user}) => {
   const getCurrentData = (num) => {
     const numPage = num ? num : currentNumPage
     console.log(currentNumPage)
-    let res = []
+    let res: any[] = []
     user.coupons?.map((v, i) => {
       if (i >= (numPage - 1) * pageSize && i < numPage * pageSize) {
         res.push(v)
@@ -69,6 +71,6 @@ const CouponsPage = ({dispatch, user}) => {
   </Profile>
 }
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   user: state.user
 }))(CouponsPage);

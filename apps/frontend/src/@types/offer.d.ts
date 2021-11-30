@@ -20,7 +20,7 @@ interface Offer {
   is_activate: boolean
 }
 
-interface Coupons {
+interface Coupon {
   id: string
   offer_id: string
   title: string

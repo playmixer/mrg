@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render} from "react-dom";
-import {store} from './store/index';
+import {store} from './store';
 import {Provider} from 'react-redux';
 import {
   BrowserRouter,
@@ -16,7 +16,6 @@ import Layout from "./components/Layout";
 import NavMenu from "./components/NavMenu"
 
 import routers, {getLink} from "./routers"
-import ModalComponent from "./components/Modal";
 
 const DivContainer = styled.div`
 color: black;
