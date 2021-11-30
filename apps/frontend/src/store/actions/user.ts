@@ -5,7 +5,7 @@ import {errorHanding} from "@api/handlers";
 
 export const login = (payload: {username: string, password: string}) => (dispatch: any) => {
   apiHandle.authLogin(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200) {
         dispatch(userStore.login(res.data));
       } else {
@@ -20,7 +20,7 @@ export const login = (payload: {username: string, password: string}) => (dispatc
 
 export const logout = () => (dispatch: any) =>
   apiHandle.authLogout()
-    .then((res: RequestResult) => {
+    .then(res => {
       dispatch(userStore.logout())
     })
     .catch((err: RequestError) => dispatch(userStore.error(err.message)))
@@ -28,7 +28,7 @@ export const logout = () => (dispatch: any) =>
 
 export const check = () => (dispatch: any) =>
   apiHandle.authState()
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200) {
         dispatch(userStore.login(res.data))
       } else {
@@ -43,7 +43,7 @@ export const check = () => (dispatch: any) =>
 
 export const search = (payload: any) =>
   apiHandle.userSearch(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         return res.data.data
       }
@@ -52,7 +52,7 @@ export const search = (payload: any) =>
 
 export const coupons = () => (dispatch: any) =>
   apiHandle.userCoupons()
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         dispatch(userStore.coupons(res.data.data))
         return res.data
@@ -62,7 +62,7 @@ export const coupons = () => (dispatch: any) =>
 
 export const currentOrganization = () => (dispatch: any) =>
   apiHandle.organizationCurrent()
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         dispatch(userStore.currentOrganization(res.data.data))
         return res.data.data

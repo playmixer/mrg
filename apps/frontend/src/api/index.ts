@@ -1,6 +1,6 @@
 import {Config} from "../config";
 
-const axios = require('axios');
+import axios, {AxiosPromise, Method} from 'axios'
 
 const API = Config.SUBDIRECTORY
 
@@ -18,7 +18,7 @@ const getCSRF = () => {
   return decodeURIComponent(xsrfCookies[0].split('=')[1]);
 }
 
-const _request = (url: string, method: string, data: object, headers: {} = {}) => {
+const _request = async <T,>(url, method: Method, data, headers: {} = {}) => {
   // console.log(headers)
   return axios({
     method,
@@ -27,102 +27,102 @@ const _request = (url: string, method: string, data: object, headers: {} = {}) =
     headers: {
       ...headers,
     }
-  })
+  }) as AxiosPromise<T>
 }
 
-const _post = (url: string, data: object, headers: {} = {}) =>
-  _request(url, 'post', data, {"X-CSRFToken": getCSRF(), ...headers})
+const _post = async <T = RequestResult,>(url: string, data: object, headers: {} = {}) =>
+  _request<T>(url, 'post', data, {"X-CSRFToken": getCSRF(), ...headers})
 
-const _update = (url: string, data: object) =>
-  _request(url, 'put', data, {"X-CSRFToken": getCSRF()})
+const _update = async <T = RequestResult,>(url: string, data: object) =>
+  _request<T>(url, 'put', data, {"X-CSRFToken": getCSRF()})
 
-const _delete = (url: string, data: object) =>
-  _request(url, 'delete', data, {"X-CSRFToken": getCSRF()})
+const _delete = async <T = RequestResult,>(url: string, data: object) =>
+  _request<T>(url, 'delete', data, {"X-CSRFToken": getCSRF()})
 
-const _get = (url: string, data: object = {}) => {
+const _get = async <T = RequestResult,>(url: string, data: object = {}) => {
   const query = Object.keys(data).map(k => {
     // @ts-ignore
     return `${[k]}=${data[k]}`
   }).join('&')
-  return _request(`${url}?${query}`, 'get', {})
+  return _request<T>(`${url}?${query}`, 'get', {})
 }
 
 // Application
 
 export const urlStores = `${API}/api/v0/stores/`
 
-export const upload = (payload: any) =>
+export const upload = async (payload: any) =>
   _post(`${API}/api/v0/upload/`, payload)
 
-export const getCity = () =>
+export const getCity = async () =>
   _get(`${API}/api/v0/city/`, {})
 
 // Auth API
-export const authLogin = (payload: { username: string, password: string }) =>
+export const authLogin = async (payload: { username: string, password: string }) =>
   _post(`${API}/api/v0/auth/login/`, payload)
 // .then((res: UserRequest) => {
 //     return res
 // })
 
-export const authLogout = () =>
+export const authLogout = async() =>
   _get(`${API}/api/v0/auth/logout/`, {})
 
-export const authRegistration = (payload: { username: string, password: string, password2: string }) =>
+export const authRegistration = async (payload: { username: string, password: string, password2: string }) =>
   _post(`${API}/api/v0/auth/registration/`, payload)
 
-export const authState = () =>
+export const authState = async () =>
   _get(`${API}/api/v0/auth/`)
 
 // Organization API
-export const organizationNew = (payload: any) =>
+export const organizationNew = async (payload: any) =>
   _post(`${API}/api/v0/organizations/`, payload)
 
-export const organizationList = () =>
+export const organizationList = async () =>
   _get(`${API}/api/v0/organizations/`)
 
-export const organizationUpdate = (payload: any) =>
+export const organizationUpdate = async (payload: any) =>
   _update(`${API}/api/v0/organizations/`, payload)
 
-export const organizationAddUser = (payload: any) =>
+export const organizationAddUser = async (payload: any) =>
   _post(`${API}/api/v0/organizations/user/`, payload)
 
-export const organizationRemoveUser = (payload: any) =>
+export const organizationRemoveUser = async (payload: any) =>
   _delete(`${API}/api/v0/organizations/user/`, payload)
 
-export const organizationSearch = (payload: any) =>
+export const organizationSearch = async (payload: any) =>
   _get(`${API}/api/v0/organizations/search/`, payload)
 
-export const organizationCurrent = () =>
+export const organizationCurrent = async () =>
   _get(`${API}/api/v0/organization/`)
 
 // User API
-export const userSearch = (payload: any) =>
+export const userSearch = async (payload: any) =>
   _get(`${API}/api/v0/user/search/`, payload)
 
-export const userCoupons = () =>
+export const userCoupons = async () =>
   _get(`${API}/api/v0/user/coupons/`)
 
 // Offer API
-export const offerList = () =>
+export const offerList = async () =>
   _get(`${API}/api/v0/offers/`)
 
-export const offerNew = (payload: any) =>
+export const offerNew = async (payload: any) =>
   _post(`${API}/api/v0/offer/`, payload)
 
-export const offerUpdate = (payload: any) =>
+export const offerUpdate = async (payload: any) =>
   _update(`${API}/api/v0/offer/`, payload)
 
-export const offerAddAddress = (payload: any) =>
+export const offerAddAddress = async (payload: any) =>
   _post(`${API}/api/v0/offer/address/`, payload)
 
-export const offerCreateCoupons = (payload: any) =>
+export const offerCreateCoupons = async (payload: any) =>
   _post(`${API}/api/v0/offer/coupons/`, payload)
 
-export const offerGetCoupons = (payload: any) =>
+export const offerGetCoupons = async (payload: any) =>
   _get(`${API}/api/v0/offer/coupons/`, payload)
 
-export const offerBuyCoupon = (payload: any) =>
+export const offerBuyCoupon = async (payload: any) =>
   _post(`${API}/api/v0/offer/coupon/buy/`, payload)
 
-export const offerActivateCoupon = (payload: any) =>
+export const offerActivateCoupon = async (payload: any) =>
   _post(`${API}/api/v0/offer/coupon/activate/`, payload)

@@ -1,10 +1,7 @@
 interface RequestResult {
-  status: number
-  data: {
-    data?: any
-    success?: boolean
-    detail?: string
-  }
+  data?: any
+  success?: boolean
+  detail?: string
 }
 
 interface RequestError {

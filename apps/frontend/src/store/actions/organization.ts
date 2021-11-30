@@ -5,7 +5,7 @@ import {notify} from "@components/Notification";
 
 export const list = () => (dispatch: any) =>
   apiHandle.organizationList()
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200) {
         const data = res.data
         if (data.success)
@@ -17,7 +17,7 @@ export const list = () => (dispatch: any) =>
 
 export const add = (payload: any) => (dispatch: any) =>
   apiHandle.organizationNew(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         dispatch(organizationStore.add(payload.data))
       }
@@ -26,7 +26,7 @@ export const add = (payload: any) => (dispatch: any) =>
 
 export const update = (payload: object) => (dispatch: any) =>
   apiHandle.organizationUpdate(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         dispatch(organizationStore.update(res.data.data))
         notify("Организация обновлена")
@@ -36,7 +36,7 @@ export const update = (payload: object) => (dispatch: any) =>
 
 export const addUser = (payload: object) => (dispatch: any) =>
   apiHandle.organizationAddUser(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       console.log(res)
       if (res.status === 200 && res.data.success) {
         dispatch(organizationStore.addUser(res.data.data))
@@ -46,7 +46,7 @@ export const addUser = (payload: object) => (dispatch: any) =>
 
 export const removeUser = (payload: object) => (dispatch: any) =>
   apiHandle.organizationRemoveUser(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         dispatch(organizationStore.removeUser(res.data.data))
       }

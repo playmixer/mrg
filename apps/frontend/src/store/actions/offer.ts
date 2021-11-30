@@ -16,7 +16,7 @@ export const list = () => (dispatch: any) =>
 
 export const add = (payload: object) => (dispatch: any) =>
   apiHandler.offerNew(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         dispatch(storeOffer.add(res.data.data))
         notify('Акция добалена', 'success')
@@ -27,7 +27,7 @@ export const add = (payload: object) => (dispatch: any) =>
 
 export const update = (payload: object) => (dispatch: any) =>
   apiHandler.offerUpdate(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         notify('Акция обновлена', 'success')
         dispatch(storeOffer.update(res.data.data))
@@ -38,7 +38,7 @@ export const update = (payload: object) => (dispatch: any) =>
 
 export const buy = (payload: object) => (dispatch: any) =>
   apiHandler.offerBuyCoupon(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         notify('Купон куплен', 'success')
 
@@ -48,7 +48,7 @@ export const buy = (payload: object) => (dispatch: any) =>
 
 export const addAddress = (payload: object) => (dispatch: any) =>
   apiHandler.offerAddAddress(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         dispatch(storeOffer.addAddress(res.data.data))
         notify('Адреса обновлены', 'success')
@@ -59,7 +59,7 @@ export const addAddress = (payload: object) => (dispatch: any) =>
 
 export const getCoupons = (payload: object) => (dispatch: any) =>
   apiHandler.offerGetCoupons(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         // notify('Адреса обновлены', 'success')
         return res.data.data
@@ -69,7 +69,7 @@ export const getCoupons = (payload: object) => (dispatch: any) =>
 
 export const createCoupons = (payload: object) => (dispatch: any) =>
   apiHandler.offerCreateCoupons(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         notify('Купоны созданы', 'success')
         return res.data.data
@@ -79,7 +79,7 @@ export const createCoupons = (payload: object) => (dispatch: any) =>
 
 export const activateCoupon = (payload: object) => (dispatch: any) =>
   apiHandler.offerActivateCoupon(payload)
-    .then((res: RequestResult) => {
+    .then(res => {
       if (res.status === 200 && res.data.success) {
         notify('Купон активирован', 'success')
         return res.data.data
