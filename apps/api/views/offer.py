@@ -77,6 +77,8 @@ class BuyCoupon(APIView):
                 offer.organization.save()
 
                 coupon = coupons_all.filter(user=None).first()
+                if coupon is None:
+                    raise Exception("Купоны закончились")
                 coupon.user_id = user.id
                 coupon.date_buy = datetime.now()
                 coupon.save()

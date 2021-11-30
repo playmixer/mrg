@@ -7,7 +7,6 @@ import Button from "@components/Button";
 import {InputText, RadioGroup, InputFile} from "@components/inputs/";
 
 
-
 interface PropsCouponsData {
   count: number
   purchased: number
@@ -55,22 +54,32 @@ const OfferCoupons = ({dispatch, offer, data}: Props) => {
   }
 
   const handleCreateCoupons = () => {
-    const file = loadFile.target.files[0];
-    const form = new FormData();
-    form.append(
-      "file",
-      file,
-      file.name
-    )
-    Object.keys(inputForm).map(v =>
-      form.append(v, inputForm[v])
-    )
+    if (inputForm.type === options_create_coupon_type[1].value) {
+      const file = loadFile.target.files[0];
+      const form = new FormData();
+      form.append(
+        "file",
+        file,
+        file.name
+      )
+      Object.keys(inputForm).map(v =>
+        form.append(v, inputForm[v])
+      )
 
-    dispatch(offerAction.createCoupons(form))
-      .then((res: PropsCouponsData) => {
-        setCoupons(res)
-        setIsOpenCreateCoupons(false)
-      })
+      dispatch(offerAction.createCoupons(form))
+        .then((res: PropsCouponsData) => {
+          setCoupons(res)
+          setIsOpenCreateCoupons(false)
+        })
+    }
+    if (inputForm.type === options_create_coupon_type[0].value) {
+
+      dispatch(offerAction.createCoupons(inputForm))
+        .then((res: PropsCouponsData) => {
+          setCoupons(res)
+          setIsOpenCreateCoupons(false)
+        })
+    }
   }
 
   const onChangeCreateType = (e: React.ChangeEvent<HTMLInputElement>) => {
