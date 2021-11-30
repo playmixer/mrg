@@ -2,7 +2,6 @@ import React from "react";
 
 interface Props {
   title: string
-  value?: string
   onChange: any
   readonly?: boolean
   name?: string
@@ -10,7 +9,7 @@ interface Props {
   accept?: string
 }
 
-export const InputFile = ({title, value="", onChange, readonly = false, name="file", disabled=false, accept=''}: Props) => {
+export const InputFile = ({title, onChange, readonly = false, name="file", disabled=false, accept=''}: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.name)
     onChange && onChange(e)
@@ -21,7 +20,7 @@ export const InputFile = ({title, value="", onChange, readonly = false, name="fi
       type={"file"}
       className="form-control"
       style={{borderRadius: 0}}
-      value={value}
+      // value={value}
       onChange={handleChange}
       readOnly={readonly}
       name={name}

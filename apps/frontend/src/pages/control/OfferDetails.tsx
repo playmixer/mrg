@@ -205,7 +205,7 @@ const OfferDetails = ({dispatch, offer}: Props) => {
   });
   const [editable, setEditable] = useState(false);
   const [tab, setTab] = useState(T_DETAIL);
-  const [imagePromo, setImagePromo] = useState<any>();
+  const [imagePromo, setImagePromo] = useState();
   const [uploadingImage, setUploadingImage] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -250,7 +250,8 @@ const OfferDetails = ({dispatch, offer}: Props) => {
   }
 
   const handleUploadImage = () => {
-    const image = imagePromo?.target.files[0];
+    // @ts-ignore
+    const image = imagePromo?.target?.files[0];
     const form = new FormData();
     form.append(
       "file",

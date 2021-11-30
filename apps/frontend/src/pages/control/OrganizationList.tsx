@@ -102,24 +102,28 @@ const OrganizationList = ({dispatch, organization}: Props) => {
           name={"title"}
           placeholder={"Рога и Копыта"}
           onChange={handleChange}
+          value={formValues.title}
         />
         <InputText
           title={"Телефона"}
           name={"phone"}
           placeholder={"+79123456789"}
           onChange={handleChange}
+          value={formValues.phone}
         />
         <InputText
           title={"Почта"}
           name={"email"}
           placeholder={"example@example.ru"}
           onChange={handleChange}
+          value={formValues.email}
         />
         <InputText
           title={"Представитель"}
           name={"retailer"}
           placeholder={"Иванов Иван Иванович"}
           onChange={handleChange}
+          value={formValues.retailer}
         />
         <Button type={"submit"} schema={"primary"}>Добавить</Button>
       </form>

@@ -11,7 +11,6 @@ import Button from "@components/Button";
 import {SelectAsync} from "@components/inputs/"
 
 
-
 const formInputs = [
   {
     title: "Название",
@@ -34,6 +33,16 @@ const formInputs = [
 const PT_DETAIL = 0;
 const PT_USERS = 1;
 
+interface OrganizatonInputForm {
+  id: string
+  is_activate: boolean
+  title: string
+  phone: string
+  email: string
+  retailer: string
+  users?: User[]
+}
+
 interface Props {
   dispatch: any
   organization: OrganizationStoreProps
@@ -45,33 +54,32 @@ const ControlOrganization = ({dispatch, organization, user}: Props) => {
 
   const [tab, setTab] = useState(PT_DETAIL);
   const [editable, setEditable] = useState(false);
-  const [userSelected, setUserSelected] = useState<{label: string, value: string}>({label: "", value: ""});
+  const [userSelected, setUserSelected] = useState<{ label: string, value: string }>({label: "", value: ""});
   const [textSearch, setTextSearch] = useState('');
-  const [org, setOrg] = useState<Organization & {[key: string]: any}>({
-    balance: 0,
-    id: '',
-    title: "",
-    phone: "",
-    email: "",
-    retailer: "",
-    is_activate: false,
-    users: []
-  });
-  const [valuesForm, setValuesForm] = useState<Organization & {[key: string]: any}>({
-    balance: 0,
-    email: "",
+  const [org, setOrg] = useState<OrganizatonInputForm>({
+    users: [],
     id: "",
     is_activate: false,
-    phone: "",
-    retailer: "",
     title: "",
+    phone: "",
+    email: "",
+    retailer: ""
+  });
+  const [valuesForm, setValuesForm] = useState<OrganizatonInputForm>({
+    users: [],
+    id: "",
+    is_activate: false,
+    title: "",
+    phone: "",
+    email: "",
+    retailer: ""
   });
 
   const history = useHistory();
-  const {id} = useParams<{id: string}>();
+  const {id} = useParams<{ id: string }>();
 
   const chooseOrg = () =>
-    organization.data.map((v: Organization, i) => {
+    organization.data.map((v: OrganizatonInputForm, i) => {
       if (v.id == id) {
         setOrg(v)
         setValuesForm(v)
@@ -118,7 +126,7 @@ const ControlOrganization = ({dispatch, organization, user}: Props) => {
     dispatch(actionOrganization.addUser(payload))
   }
 
-  const handleRemoveUser = ({username, id}: {username: string, id: string}) => {
+  const handleRemoveUser = ({username, id}: { username: string, id: string }) => {
     const payload = {
       username,
       id,
@@ -136,7 +144,7 @@ const ControlOrganization = ({dispatch, organization, user}: Props) => {
   const loadOptions = (inputValue: string, callback: any) => {
     let data: { label: any; value: any }[];
     actionUser.search({username: inputValue, is_retailer: false})
-      .then((res: {username: string, id: string}[]) => {
+      .then((res: { username: string, id: string }[]) => {
         data = res?.map((v) => ({label: v.username, value: v.id})) || []
       })
 

@@ -12,6 +12,15 @@ import * as actionOffer from "@store/actions/offer";
 import Button from "@components/Button";
 import {notify} from "@components/Notification";
 
+interface InputOfferForm {
+  title: string
+  organization_id: string
+  date_start: string
+  date_end: string
+  description: string
+  quantity_per_hand: string
+  client_level: string
+}
 
 interface Props {
   dispatch: any
@@ -20,13 +29,23 @@ interface Props {
 const OfferNew = ({dispatch}: Props) => {
   const history = useHistory();
 
-  const [inputsValue, setInputsValue] = useState({})
+  const [inputsValue, setInputsValue] = useState<InputOfferForm>({
+    date_end: "",
+    date_start: "",
+    description: "",
+    organization_id: "",
+    title: "",
+    quantity_per_hand: "1",
+    client_level: "1"
+  })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputsValue({
       ...inputsValue,
       [e.target.name]: e.target.value
     })
+    console.log({[e.target.name]: e.target.value})
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +82,7 @@ const OfferNew = ({dispatch}: Props) => {
         title={"Название"}
         name={'title'}
         onChange={handleInputChange}
+        value={inputsValue.title}
       />
       <InputText
         title={"Начало"}
@@ -70,6 +90,7 @@ const OfferNew = ({dispatch}: Props) => {
         type={"date"}
         onChange={handleInputChange}
         style={{width: 300}}
+        value={inputsValue.date_start}
       />
       <InputText
         title={"Окончание"}
@@ -77,11 +98,13 @@ const OfferNew = ({dispatch}: Props) => {
         type={"date"}
         onChange={handleInputChange}
         style={{width: 300}}
+        value={inputsValue.date_end}
       />
       <InputText
         title={"Описание"}
         name={'description'}
         onChange={handleInputChange}
+        value={inputsValue.description}
       />
       <SelectAsync
         className="mb-3"
@@ -94,11 +117,13 @@ const OfferNew = ({dispatch}: Props) => {
         title={"Кол-во в руки"}
         name={'quantity_per_hand'}
         onChange={handleInputChange}
+        value={inputsValue.quantity_per_hand}
       />
       <InputText
         title={"Уровень"}
         name={'client_level'}
         onChange={handleInputChange}
+        value={inputsValue.client_level}
       />
       {/*<InputText*/}
       {/*  type="number"*/}
