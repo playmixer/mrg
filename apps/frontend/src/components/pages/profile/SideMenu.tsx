@@ -2,7 +2,7 @@ import React from "react";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import styled from "styled-components";
 
-import routers, {getLink} from "../../../routers";
+import routers, {getLink} from "routers";
 
 const SideMenu = ({}) => {
   const history = useHistory();

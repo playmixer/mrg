@@ -1,8 +1,8 @@
 import * as storeOffer from '../reducers/offer';
-import * as apiHandler from '../../api/index';
-import {errorHanding} from "../../api/handlers";
+import * as apiHandler from '@api/index';
+import {errorHanding} from "@api/handlers";
 
-import {notify} from '../../components/Notification';
+import {notify} from '@components/Notification';
 
 export const list = () => (dispatch: any) =>
   apiHandler.offerList()

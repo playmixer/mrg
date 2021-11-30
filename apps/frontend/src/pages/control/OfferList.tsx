@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
-import routers, {getLink} from "../../routers";
+import routers, {getLink} from "routers";
 
 
 interface Props {

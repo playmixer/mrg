@@ -1,6 +1,6 @@
 import * as appStore from '../reducers/application';
-import * as apiHandler from '../../api/index';
-import {errorHanding} from "../../api/handlers";
+import * as apiHandler from '@api/index';
+import {errorHanding} from "@api/handlers";
 
 export const loading = (payload: object) => (dispatch: any) =>
   dispatch(appStore.loading(payload))

@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import SideMenu from "../../components/pages/profile/SideMenu";
+import SideMenu from "@components/pages/profile/SideMenu";
 import Page404 from "../404";
 
 const Profile = ({children, user}) => {

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 
-import * as offerAction from '../../store/actions/offer';
-import Button from "../../components/Button";
+import * as offerAction from '@store/actions/offer';
+import Button from "@components/Button";
 import OfferList from "./OfferList";
 import OfferNew from "./OfferNew";
 

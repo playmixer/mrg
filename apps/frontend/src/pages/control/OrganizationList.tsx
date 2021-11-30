@@ -3,10 +3,10 @@ import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 
 
-import Button from "../../components/Button";
-import {InputText} from "../../components/inputs/";
-import * as organizationAction from "../../store/actions/organization";
-import routers, {getLink} from "../../routers";
+import Button from "@components/Button";
+import {InputText} from "@components/inputs/";
+import * as organizationAction from "@store/actions/organization";
+import routers, {getLink} from "routers";
 
 interface PropsDetail {
   data: Organization[]

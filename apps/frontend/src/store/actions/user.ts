@@ -1,6 +1,6 @@
-import * as apiHandle from '../../api/index';
+import * as apiHandle from '@api/index';
 import * as userStore from '../reducers/user'
-import {errorHanding} from "../../api/handlers";
+import {errorHanding} from "@api/handlers";
 
 
 export const login = (payload: {username: string, password: string}) => (dispatch: any) => {

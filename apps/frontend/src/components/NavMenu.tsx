@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import * as userHandle from "../store/actions/user";
-import * as appActions from "../store/actions/application";
 
-import routers, {getLink} from "../routers";
+import * as userHandle from "@store/actions/user";
+import * as appActions from "@store/actions/application";
+
+import routers, {getLink} from "routers";
 import Button from "./Button";
-import {ROLES} from "../utils/auth";
+import {ROLES} from "@utils/auth";
 
 import ModalComponent from "./Modal";
 

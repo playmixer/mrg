@@ -4,11 +4,11 @@ import {Link, useParams, useHistory} from "react-router-dom";
 
 import {YMaps, Map, Placemark} from "react-yandex-maps";
 
-import routers, {getFileUrl, getLink, getLinkControlOffer} from "../../routers";
-import * as actionOffer from "../../store/actions/offer"
+import routers, {getFileUrl, getLink, getLinkControlOffer} from "routers";
+import * as actionOffer from "@store/actions/offer"
 
-import Button from "../../components/Button";
-import ModalComponent, {modalActions} from "../../components/Modal";
+import Button from "@components/Button";
+import ModalComponent, {modalActions} from "@components/Modal";
 import Page404 from "../404";
 
 

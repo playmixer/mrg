@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import styled from "styled-components";
 
-import * as offerAction from "../../store/actions/offer";
-import Button from "../../components/Button";
-import {InputText, RadioGroup, InputFile} from "../../components/inputs/";
+import * as offerAction from "@store/actions/offer";
+import Button from "@components/Button";
+import {InputText, RadioGroup, InputFile} from "@components/inputs/";
 
 
 

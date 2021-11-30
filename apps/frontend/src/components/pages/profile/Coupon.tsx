@@ -3,14 +3,14 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import QRCode from "react-qr-code";
 
-import {getFileUrl, getLinkOffer} from "../../../routers";
+import {getFileUrl, getLinkOffer} from "routers";
 
 import ModalComponent from "../../Modal";
 import Button from "../../Button";
 import {InputText} from "../../inputs/";
 import {notify} from "../../Notification";
 
-import {colors} from "../../../style/colors";
+import {colors} from "@style/colors";
 
 
 

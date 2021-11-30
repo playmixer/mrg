@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@style/*": ["./src/style/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@components/*": ["./src/components/*"],
+      "@store/*": ["./src/store/*"],
+      "@api/*": ["./src/api/*"],
+      "routers": ["./src/routers"]
+    },
     "sourceMap": true,
     "target": "es5",
     "lib": [

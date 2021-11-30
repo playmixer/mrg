@@ -2,13 +2,13 @@ import React, {useEffect, useState} from "react";
 import {useParams, useHistory} from 'react-router-dom'
 import {connect} from "react-redux";
 
-import * as actionOrganization from '../../store/actions/organization';
-import * as actionUser from '../../store/actions/user';
+import * as actionOrganization from '@store/actions/organization';
+import * as actionUser from '@store/actions/user';
 
 import Page404 from "../404";
 
-import Button from "../../components/Button";
-import {SelectAsync} from "../../components/inputs/"
+import Button from "@components/Button";
+import {SelectAsync} from "@components/inputs/"
 
 
 

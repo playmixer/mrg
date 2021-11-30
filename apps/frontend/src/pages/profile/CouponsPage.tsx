@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 
-import * as storeUser from "../../store/actions/user";
-import * as offerAction from "../../store/actions/offer";
+import * as storeUser from "@store/actions/user";
+import * as offerAction from "@store/actions/offer";
 
 import Profile from "./index";
-import Coupon from "../../components/pages/profile/Coupon";
-import Pagination from "../../components/Pagination";
+import Coupon from "@components/pages/profile/Coupon";
+import Pagination from "@components/Pagination";
 
 
 

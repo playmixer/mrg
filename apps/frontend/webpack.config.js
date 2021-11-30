@@ -1,11 +1,10 @@
-// const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   node: {
     fs: 'empty'
   },
   module: {
-    // entry: './src/index.js',
     rules: [
       {
         test: /\.js$/,
@@ -23,11 +22,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()],
   },
-  // output: {
-  //   filename: 'main.js',
-  //   path: path.resolve(__dirname, '../static/frontend'),
-  // },
   performance: {
     hints: false,
     maxEntrypointSize: 512000,

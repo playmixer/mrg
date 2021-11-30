@@ -1,7 +1,7 @@
-import * as apiHandle from "../../api";
+import * as apiHandle from "@api/index";
 import * as organizationStore from "../reducers/organization";
 
-import {notify} from "../../components/Notification";
+import {notify} from "@components/Notification";
 
 export const list = () => (dispatch: any) =>
   apiHandle.organizationList()

@@ -4,15 +4,15 @@ import {connect} from "react-redux";
 import styled from "styled-components";
 import {AddressSuggestions, DaDataSuggestion} from 'react-dadata';
 
-import * as offerAction from '../../store/actions/offer';
-import * as apiHandle from '../../api/index';
+import * as offerAction from '@store/actions/offer';
+import * as apiHandle from '@api/index';
 
 import Page404 from "../404";
-import Button from "../../components/Button";
-import {getFileUrl} from "../../routers";
-import {InputText, InputFile} from "../../components/inputs/";
-import {notify} from "../../components/Notification";
-import {InputArea} from "../../components/inputs/InputArea";
+import Button from "@components/Button";
+import {getFileUrl} from "routers";
+import {InputText, InputFile} from "@components/inputs/";
+import {notify} from "@components/Notification";
+import {InputArea} from "@components/inputs";
 import OfferCoupons from "./OfferCoupons";
 
 

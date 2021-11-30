@@ -1,16 +1,16 @@
 import React, {useState} from "react";
-import {InputText} from "../../components/inputs/";
-import {SelectAsync} from "../../components/inputs/";
+import {InputText} from "@components/inputs/";
+import {SelectAsync} from "@components/inputs/";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 
-import routers, {getLink} from "../../routers";
+import routers, {getLink} from "routers";
 
-import * as apiHandler from "../../api";
-import * as actionOffer from "../../store/actions/offer";
+import * as apiHandler from "@api/index";
+import * as actionOffer from "@store/actions/offer";
 
-import Button from "../../components/Button";
-import {notify} from "../../components/Notification";
+import Button from "@components/Button";
+import {notify} from "@components/Notification";
 
 
 interface Props {

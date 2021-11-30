@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import {getImageUrl, getLinkOffer} from "../../routers";
+import {getImageUrl, getLinkOffer} from "routers";
 import {useHistory} from "react-router-dom";
-import * as apiHandle from "../../api/index"
+import * as apiHandle from "@api/index"
 import Modal from "../Modal";
 import Button from "../Button";
 import styled from "styled-components";
-import {colors} from "../../style/colors";
+import {colors} from "@style/colors";
 
 interface Props {
   data: Offer

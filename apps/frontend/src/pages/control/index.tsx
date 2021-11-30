@@ -2,12 +2,12 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom"
 
-import NavTabs from "../../components/NavTabs";
+import NavTabs from "@components/NavTabs";
 import OrganizationList from "./OrganizationList";
 import Offer from "./Offer";
 import Page404 from "../404";
 
-import routers, {getLink} from "../../routers";
+import routers, {getLink} from "routers";
 
 
 

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 
-import * as userAction from "../../store/actions/user";
+import * as userAction from "@store/actions/user";
 
 import Page404 from "../404";
 import styled from "styled-components";
