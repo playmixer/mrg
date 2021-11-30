@@ -1,6 +1,7 @@
 import * as apiHandle from "../../api";
 import * as organizationStore from "../reducers/organization";
-import {RequestError, RequestResult} from "../../types/request";
+
+import {notify} from "../../components/Notification";
 
 export const list = () => (dispatch: any) =>
   apiHandle.organizationList()
@@ -14,7 +15,7 @@ export const list = () => (dispatch: any) =>
     .catch((err: RequestError) => console.log(err.message))
 
 
-export const add = (payload: object & {data: object}) => (dispatch: any) =>
+export const add = (payload: any) => (dispatch: any) =>
   apiHandle.organizationNew(payload)
     .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
@@ -28,6 +29,7 @@ export const update = (payload: object) => (dispatch: any) =>
     .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         dispatch(organizationStore.update(res.data.data))
+        notify("Организация обновлена")
       }
     })
     .catch((err: RequestError) => console.log(err.message))

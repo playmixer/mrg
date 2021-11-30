@@ -1,10 +1,10 @@
 import React from "react";
 
 interface Props {
-  tabs: []
+  tabs: string[]
   onChange?: any
   active: number
-  className: object
+  className: string
 }
 
 const NavTabs = ({tabs, onChange, active, className}: Props) => {

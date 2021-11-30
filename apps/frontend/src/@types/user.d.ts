@@ -1,4 +1,6 @@
-export interface User {
+import {UserStoreProps} from "./store";
+
+interface User {
   id: string
   username: string
   isAuth: boolean
@@ -6,9 +8,9 @@ export interface User {
   roles: string[]
 }
 
-export interface UserRequest {
+interface UserRequest {
   data: {
-    data: User
+    data: UserStoreProps
     detail: string
   }
 }

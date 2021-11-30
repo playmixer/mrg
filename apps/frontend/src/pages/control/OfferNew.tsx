@@ -11,42 +11,48 @@ import * as actionOffer from "../../store/actions/offer";
 
 import Button from "../../components/Button";
 import {notify} from "../../components/Notification";
+import {Offer} from "../../@types/offer";
+import {Organization} from "../../@types/orgranization";
 
-const OfferNew = ({dispatch}) => {
+interface Props {
+  dispatch: any
+}
+
+const OfferNew = ({dispatch}: Props) => {
   const history = useHistory();
 
   const [inputsValue, setInputsValue] = useState({})
 
-  const handleInputChange = (e) =>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputsValue({
       ...inputsValue,
       [e.target.name]: e.target.value
     })
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(inputsValue);
     dispatch(actionOffer.add(inputsValue))
-      .then(res => {
+      .then((res: Offer) => {
         const id = res.id;
         history.push(getLink(routers.controlOffer.name).replace(':id', id));
       })
   }
 
-  const handleSelectOrg = (v) => {
+  const handleSelectOrg = (v: {value: string}) => {
     setInputsValue({
       ...inputsValue,
       organization_id: v.value
     })
   }
 
-  const loadOfferOptions = (valueInput, callback) => {
-    let data = []
+  const loadOfferOptions = (valueInput: string, callback: any) => {
+    let data: never[] = []
     apiHandler.organizationSearch({title: valueInput})
-      .then(res => {
-        data = res.data.data.map(v => ({label: v.title, value: v.id}));
+      .then((res: Response & any) => {
+        data = res.data.data.map((v: Organization) => ({label: v.title, value: v.id}));
       })
-      .catch(err => notify(err.message, 'warning'))
+      .catch((err: RequestError) => notify(err.message, 'warning'))
     setTimeout(() => {
       callback(data)
     }, 1000)

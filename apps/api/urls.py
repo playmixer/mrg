@@ -32,5 +32,6 @@ urlpatterns = [
     path('offers/', view_offer.OfferNoAuth.as_view()),
 
     path('upload/', view_main.Upload.as_view()),
-    path('stores/', view_main.Stores.as_view())
+    path('stores/', view_main.Stores.as_view()),
+    path('city/', view_main.City.as_view())
 ]

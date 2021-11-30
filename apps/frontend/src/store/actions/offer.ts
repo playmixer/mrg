@@ -3,14 +3,13 @@ import * as apiHandler from '../../api/index';
 import {errorHanding} from "../../api/handlers";
 
 import {notify} from '../../components/Notification';
-import {RequestResult} from "../../types/request";
-
 
 export const list = () => (dispatch: any) =>
   apiHandler.offerList()
-    .then((res: RequestResult) => {
+    .then((res) => {
       if (res.status === 200 && res.data.success) {
         dispatch(storeOffer.list(res.data.data))
+        return res.data.data
       }
     })
     .catch(errorHanding)
@@ -32,7 +31,7 @@ export const update = (payload: object) => (dispatch: any) =>
       if (res.status === 200 && res.data.success) {
         notify('Акция обновлена', 'success')
         dispatch(storeOffer.update(res.data.data))
-        return res.data
+        return res.data.data
       }
     })
     .catch(errorHanding)
@@ -73,7 +72,7 @@ export const createCoupons = (payload: object) => (dispatch: any) =>
     .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         notify('Купоны созданы', 'success')
-        return res.data
+        return res.data.data
       }
     })
     .catch(errorHanding)

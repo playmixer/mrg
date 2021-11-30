@@ -10,20 +10,32 @@ import * as actionOffer from "../../store/actions/offer"
 import Button from "../../components/Button";
 import ModalComponent, {modalActions} from "../../components/Modal";
 import Page404 from "../404";
+import {StoreProps} from "../../@types/store";
+import {Offer} from "../../@types/offer";
 
 
 const OfferPage = ({dispatch, user, offer}) => {
-  const {id} = useParams();
+  const {id} = useParams<{id: string}>();
   const history = useHistory();
-  const [currentOffer, setCurrentOffer] = useState({
+  const [currentOffer, setCurrentOffer] = useState<Offer>({
+    addresses: undefined,
+    client_level: 0,
+    date_end: "",
+    date_start: "",
+    description: "",
+    id: "",
+    image_promo: "",
+    is_activate: false,
+    organization: undefined,
+    title: "",
     quantity_per_hand: 1
   });
   const [showModal, setShowModal] = useState(false);
   const [coordinate, setCoordinate] = useState([55.75, 37.57]);
   const [ymaps, setYmaps] = useState(null)
 
-  const getCurrentOffer = () => {
-    let res = null;
+  const getCurrentOffer = (): Offer => {
+    let res;
     offer.data.map((v, i) => {
       if (v.id == id) {
         setCurrentOffer(v)
@@ -53,10 +65,10 @@ const OfferPage = ({dispatch, user, offer}) => {
 
 
   useEffect(() => {
-    const offer = getCurrentOffer()
+    const offer: Offer = getCurrentOffer()
 
-    if (offer.addresses?.length)
-      setCoordinate([offer.addresses[0]?.geo_lat, offer.addresses[0]?.geo_lon])
+    if (offer && offer.addresses && offer?.addresses?.length)
+      setCoordinate([Number(offer?.addresses[0]?.geo_lat), Number(offer.addresses[0]?.geo_lon)])
   }, [])
 
   if (!currentOffer.id)
@@ -87,7 +99,7 @@ console.log(currentOffer)
             Необходимый уровень: <b>{currentOffer.client_level}</b>
           </div>
           <div className="mb-3">
-            От партнера: <b>{currentOffer.organization.title}</b>
+            От партнера: <b>{currentOffer.organization?.title}</b>
           </div>
         </div>
         <div className="mb-3">
@@ -110,7 +122,7 @@ console.log(currentOffer)
       </div>
       <div className="mb-3">
         <ul className="list-group" style={{borderRadius: 0}}>
-          {currentOffer.addresses.map((v, i) => {
+          {currentOffer.addresses?.map((v, i) => {
             return <li className="list-group-item d-flex justify-content-between align-items-center" key={i}>
             <span>
               <a onClick={() => selectAddress(v)}>{v.value}</a>
@@ -130,13 +142,13 @@ console.log(currentOffer)
             <Map
               state={{center: coordinate, zoom: 17}}
               style={{height: 400, width: '100%'}}
-              onLoad={ymaps => {
-                setYmaps(ymaps)
-              }}
+              // onLoad={ymaps => {
+              //   setYmaps(ymaps)
+              // }}
             >
               <Placemark
                 geometry={coordinate}
-                key={coordinate}
+                // key={coordinate}
                 options={{
                   iconLayout: "default#image",
                   // iconImageHref: mapIcon,
@@ -168,7 +180,7 @@ console.log(currentOffer)
 }
 
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   user: state.user,
   offer: state.offer
 }))(OfferPage);

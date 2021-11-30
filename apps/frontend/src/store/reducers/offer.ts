@@ -1,18 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {saveToStorage} from "./utils";
-import {Offer} from "../../types/offer";
+import {OfferStoreProps} from "../../@types/store";
+
 
 const STORE_NAME = 'offer';
 
-interface StateInterface {
-  data: Offer[]
-}
-
-const initialState: StateInterface = localStorage.getItem(STORE_NAME) ? JSON.parse(<string>localStorage.getItem(STORE_NAME)) : {
+const initialState: OfferStoreProps = localStorage.getItem(STORE_NAME) ? JSON.parse(<string>localStorage.getItem(STORE_NAME)) : {
   data: [],
 }
 
-const save = (state: StateInterface) =>
+const save = (state: OfferStoreProps) =>
   saveToStorage(state, STORE_NAME)
 
 
@@ -20,7 +17,7 @@ export const offer = createSlice({
   name: STORE_NAME,
   initialState,
   reducers: {
-    list: (state: StateInterface, action) => {
+    list: (state: OfferStoreProps, action) => {
       state = {
         ...state,
         data: [
@@ -30,7 +27,7 @@ export const offer = createSlice({
       save(state)
       return state
     },
-    add: (state: StateInterface, action) => {
+    add: (state: OfferStoreProps, action) => {
       state = {
         ...state,
         data: [
@@ -41,7 +38,7 @@ export const offer = createSlice({
       save(state)
       return state
     },
-    update: (state: StateInterface, action) => {
+    update: (state: OfferStoreProps, action) => {
       let data = state.data.map((v) => {
         return v.id === action.payload.id ? action.payload : v;
       })
@@ -54,7 +51,7 @@ export const offer = createSlice({
       save(state)
       return state
     },
-    addAddress: (state: StateInterface, action) => {
+    addAddress: (state: OfferStoreProps, action) => {
       let data = state.data.map(v => {
         return v.id === action.payload.id ? action.payload : v;
       })

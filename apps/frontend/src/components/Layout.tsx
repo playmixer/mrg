@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface Props {
-    children: HTMLBodyElement
+    children: any
 }
 
 const Layout = (props: Props) => {
-    return (<div className={"container"}>
+    return <div className={"container"}>
         {props.children}
-    </div>)
+    </div>
 }
 
 export default Layout;

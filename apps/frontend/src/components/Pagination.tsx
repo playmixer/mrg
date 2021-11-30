@@ -26,6 +26,7 @@ const Pagination = ({currentIndex, onPage, countPage, difference = 2, pageSize =
   const getPages = () => {
     let elements = []
     for (let i = 0; i < getCountPage(); i++) {
+      // @ts-ignore
       elements.push(i + 1)
     }
 
@@ -46,7 +47,7 @@ const Pagination = ({currentIndex, onPage, countPage, difference = 2, pageSize =
   const styleBtnPage = {borderRadius: 0};
 
   return <nav aria-label="Page navigation example">
-    <ul className="pagination pagination-lg justify-content-center">
+    <ul className="pagination pagination justify-content-center">
       <li className="page-item">
         <a className="page-link" href="#" aria-label="Previous" style={{...styleBtnPage}} onClick={onPrev}>
           <span aria-hidden="true">&laquo;</span>
@@ -56,10 +57,10 @@ const Pagination = ({currentIndex, onPage, countPage, difference = 2, pageSize =
         .filter(v => v === 1 || v === getCountPage() || (currentIndex - difference <= v && v <= currentIndex + difference))
         .map((v, i, arr) => {
             return <>
-              {arr[i - 1] + 1 !== v && i - 1 >= 0 && <li className="page-item" key={`dot${i}`} style={{width: 70}}>
+              {arr[i - 1] + 1 !== v && i - 1 >= 0 && <li className="page-item" key={`dot${i}`} style={{width: 50}}>
                 <span className="page-link d-flex justify-content-center">...</span>
               </li>}
-              <li className={`page-item ${currentIndex == v && 'active'}`} key={i} style={{width: 70}}>
+              <li className={`page-item ${currentIndex == v && 'active'}`} key={i} style={{width: 50}}>
                 <a className="page-link d-flex justify-content-center" href="#"
                    key={`a${i}`}
                    onClick={() => onChangePage(v)}

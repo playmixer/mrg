@@ -2,11 +2,11 @@ import React from 'react';
 import AsyncSelect from "react-select/async";
 
 interface Props {
-  onInputChange: any
+  onInputChange?: any
   onChange: any
   loadOptions: any
   title: string
-  className: any
+  className?: string
 }
 
 export const SelectAsync = ({onInputChange, onChange, loadOptions, title, className}: Props) => {

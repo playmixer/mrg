@@ -57,7 +57,7 @@ const CouponsPage = ({dispatch, user}) => {
     </div>
     <div>
       {currentData && currentData.map((v, i) => {
-        return <Coupon key={i} data={v} onActivate={onActivate} className="mb-3"/>
+        return <Coupon key={i} data={v} onActivate={onActivate}/>
       })}
     </div>
     <Pagination

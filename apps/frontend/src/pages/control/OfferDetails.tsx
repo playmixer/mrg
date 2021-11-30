@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useParams, useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import styled from "styled-components";
-import {AddressSuggestions} from 'react-dadata';
+import {AddressSuggestions, DaDataSuggestion} from 'react-dadata';
 
 import * as offerAction from '../../store/actions/offer';
 import * as apiHandle from '../../api/index';
@@ -15,27 +15,38 @@ import {notify} from "../../components/Notification";
 import {InputArea} from "../../components/inputs/InputArea";
 import OfferCoupons from "./OfferCoupons";
 
+import {Offer, OfferAddress} from "../../@types/offer";
+import {OfferStoreProps, StoreProps} from "../../@types/store";
+import {Organization} from "../../@types/orgranization";
+
 
 const T_DETAIL = 0;
 const T_COUPON = 1;
 const T_PROMO = 2;
 const T_ADDRESS = 3;
 
-const TabAddress = ({dispatch, data}) => {
-  const [addressList, setAddressList] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+
+interface PropsTabAddress {
+  dispatch: (a: any) => any
+  data: Offer
+}
+
+const TabAddress = ({dispatch, data}: PropsTabAddress) => {
+  const [addressList, setAddressList] = useState<OfferAddress[]>([]);
+  const [inputValue, setInputValue] = useState<DaDataSuggestion<any>>();
   const [isAdding, setIsAdding] = useState(false);
 
   const handleSaveAddress = () => {
-    const payload = {
-      id: data.id,
-      data: addressList
+    if (data) {
+      const payload = {
+        id: data.id,
+        data: addressList
+      }
+      dispatch(offerAction.addAddress(payload))
     }
-
-    dispatch(offerAction.addAddress(payload))
   }
 
-  const handleRemoveAddressFromList = (index) => {
+  const handleRemoveAddressFromList = (index: number) => {
     const addresses = addressList.filter((v, i) => {
       if (i !== index) return v
     })
@@ -45,17 +56,21 @@ const TabAddress = ({dispatch, data}) => {
 
   const handleAddAddress = () => {
     setAddressList([
-      {value: inputValue.value, geo_lat: inputValue.data.geo_lat, geo_lon: inputValue.data.geo_lon},
+      {
+        value: inputValue?.value,
+        geo_lat: inputValue?.data.geo_lat,
+        geo_lon: inputValue?.data.geo_lon
+      },
       ...addressList,
     ])
-    setInputValue('')
+    setInputValue(undefined)
   }
   // setTimeout(() => {
   //   let el = document.querySelector('div[class="react-dadata__suggestions"]')
   //   console.log(el.children)
   // }, 5000)
 
-  const onChangeInputValue = (e) => {
+  const onChangeInputValue = (e: DaDataSuggestion<any>) => {
     setInputValue(e)
     if (e.data?.geo_lat && e.data?.geo_lon)
       setIsAdding(true)
@@ -64,10 +79,13 @@ const TabAddress = ({dispatch, data}) => {
   }
 
   useEffect(() => {
-    setAddressList([
-      ...addressList,
-      ...data.addresses
-    ])
+    if (data && data.addresses) {
+      // @ts-ignore
+      setAddressList([
+        ...addressList,
+        ...data.addresses
+      ])
+    }
   }, [])
 
 
@@ -78,7 +96,7 @@ const TabAddress = ({dispatch, data}) => {
       <DadataWrapper>
         <AddressSuggestions
           token={"73bc8a01cb91921ce864967a763c2222d9962681"}
-          onChange={e => onChangeInputValue(e)}
+          onChange={onChangeInputValue}
           value={inputValue}
         />
       </DadataWrapper>
@@ -150,21 +168,50 @@ const DadataWrapper = styled.div`
   }
 `
 
+interface Props {
+  dispatch: (a: any) => any
+  offer: OfferStoreProps
+}
 
-const OfferDetails = ({dispatch, offer}) => {
-  const {id} = useParams();
+
+const OfferDetails = ({dispatch, offer}: Props) => {
+  const {id} = useParams<{id: string}>();
   const history = useHistory();
 
 
-  const [currentOffer, setCurrentOffer] = useState(null);
-  const [valueForm, setValueForm] = useState();
-  const [valueInputs, setValueInputs] = useState();
+  const [currentOffer, setCurrentOffer] = useState<Offer>();
+  const [valueForm, setValueForm] = useState<Offer>({
+    addresses: [],
+    client_level: 0,
+    date_end: "",
+    date_start: "",
+    description: "",
+    id: "",
+    image_promo: "",
+    is_activate: false,
+    quantity_per_hand: 0,
+    title: "",
+    organization: undefined
+  });
+  const [valueInputs, setValueInputs] = useState<Offer>({
+    organization: undefined,
+    addresses: [],
+    client_level: 0,
+    date_end: "",
+    date_start: "",
+    description: "",
+    id: "",
+    image_promo: "",
+    is_activate: false,
+    quantity_per_hand: 0,
+    title: ""
+  });
   const [editable, setEditable] = useState(false);
   const [tab, setTab] = useState(T_DETAIL);
-  const [imagePromo, setImagePromo] = useState();
+  const [imagePromo, setImagePromo] = useState<any>();
   const [uploadingImage, setUploadingImage] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editable) return true;
 
@@ -176,12 +223,10 @@ const OfferDetails = ({dispatch, offer}) => {
         delete val[v]
     })
     dispatch(offerAction.update(val))
-      .then(res => {
-        if (res.success) {
-          setEditable(false)
-          setCurrentOffer(res.data)
-          setValueForm(res.data)
-        }
+      .then((res) => {
+        setEditable(false)
+        setCurrentOffer(res)
+        setValueForm(res)
       })
   }
 
@@ -208,16 +253,16 @@ const OfferDetails = ({dispatch, offer}) => {
   }
 
   const handleUploadImage = () => {
-    const image = imagePromo.target.files[0];
+    const image = imagePromo?.target.files[0];
     const form = new FormData();
     form.append(
       "file",
       image,
       image.name
     )
-    form.append('name', `offer_${currentOffer.id}_promo.jpg`)
+    form.append('name', `offer_${currentOffer?.id}_promo.jpg`)
     apiHandle.upload(form)
-      .then(res => {
+      .then((res: RequestResult) => {
         console.log(res)
         notify("Промо картинка обновлена")
         setUploadingImage(true)
@@ -246,16 +291,16 @@ const OfferDetails = ({dispatch, offer}) => {
       Параметры
     </div>
     <div className="mb-3">
-      <Button schema={tab === T_DETAIL && 'main-primary'} style={styleNav} onClick={() => setTab(T_DETAIL)}>
+      <Button schema={tab === T_DETAIL ? 'main-primary' : undefined} style={styleNav} onClick={() => setTab(T_DETAIL)}>
         Основные
       </Button>
-      <Button schema={tab === T_PROMO && 'main-primary'} style={styleNav} onClick={() => setTab(T_PROMO)}>
+      <Button schema={tab === T_PROMO ? 'main-primary' : undefined} style={styleNav} onClick={() => setTab(T_PROMO)}>
         Изображение
       </Button>
-      <Button schema={tab === T_ADDRESS && 'main-primary'} style={styleNav} onClick={() => setTab(T_ADDRESS)}>
+      <Button schema={tab === T_ADDRESS ? 'main-primary' : undefined} style={styleNav} onClick={() => setTab(T_ADDRESS)}>
         Адреса
       </Button>
-      <Button schema={tab === T_COUPON && 'main-primary'} style={styleNav} onClick={() => setTab(T_COUPON)}>
+      <Button schema={tab === T_COUPON ? 'main-primary' : undefined} style={styleNav} onClick={() => setTab(T_COUPON)}>
         Купоны
       </Button>
     </div>
@@ -277,7 +322,7 @@ const OfferDetails = ({dispatch, offer}) => {
           <Button onClick={handleUploadImage}>Установить</Button>
         </div>
         <div className="mb-3" style={{flex: 1}}>
-          {!uploadingImage && <img src={getFileUrl(currentOffer.image_promo)} alt="" style={{height: 200}}/>}
+          {!uploadingImage && <img src={getFileUrl(currentOffer?.image_promo)} alt="" style={{height: 200}}/>}
         </div>
       </div>
     </div>}
@@ -311,16 +356,16 @@ const OfferDetails = ({dispatch, offer}) => {
         />
         <InputArea
           title={"Описание"}
-          type={"area"}
           name={'description'}
           value={getValue('description')}
           onChange={handleInputChange}
           disabled={!editable}
+          placeholder={"Описание"}
         />
         <InputText
           title={"Организация"}
           name={'organization'}
-          value={!editable ? valueForm?.organization.title : valueInputs?.organization.title}
+          value={!editable ? valueForm?.organization?.title : valueInputs?.organization?.title}
           disabled
           // onChange={handleInputChange}
         />
@@ -351,7 +396,7 @@ const OfferDetails = ({dispatch, offer}) => {
           }}>
             Отменить
           </Button>}
-        <Button type={"submit"} schema={editable && 'main-primary'} style={{width: 150}}>
+        <Button type={"submit"} schema={editable ? 'main-primary' : undefined} style={{width: 150}}>
           Сохранить
         </Button>
       </form>
@@ -363,7 +408,7 @@ const Container = styled.div`
   margin-bottom: 3px;
 `
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   offer: state.offer,
-  auth: state.auth
+  user: state.user
 }))(OfferDetails);

@@ -8,16 +8,21 @@ import Offer from "./Offer";
 import Page404 from "../404";
 
 import routers, {getLink} from "../../routers";
+import {StoreProps, UserStoreProps} from "../../@types/store";
 
 
 const ORGS = 'Партнеры'
 const COUPS = 'Акции'
 
+interface Props {
+  user: UserStoreProps
+  tab?: string
+}
 
-const Control = ({user, tab}) => {
+const Control = ({user, tab}: Props) => {
   const history = useHistory();
 
-  const tabs = [
+  const tabs: {name: string, link: string}[] = [
     {
       name: ORGS,
       link: getLink(routers.controlOrgs.name)
@@ -28,14 +33,14 @@ const Control = ({user, tab}) => {
     }
   ];
 
-  if (!user.isAuth || user.roles.indexOf('moderator') < 0)
+  if (!user.isAuth || (user.roles || []).indexOf('moderator') < 0)
     return <Page404/>;
 
   const [panel, setPanel] = useState(0);
 
-  const handleChangeTab = (e) => {
-    setPanel(e)
-    history.push(tabs[e].link)
+  const handleChangeTab = (i: number) => {
+    setPanel(i)
+    history.push(tabs[i].link)
   }
 
   const getOffer = () => {
@@ -56,13 +61,13 @@ const Control = ({user, tab}) => {
       tabs={tabs.map(v => (v.name))}
       active={panel}
       onChange={handleChangeTab}
-      className="mb-3"
+      className={"mb-3"}
     />
     {tabs[panel]?.name === ORGS && <OrganizationList/>}
     {tabs[panel]?.name === COUPS && <Offer/>}
   </div>
 }
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   user: state.user,
 }))(Control);

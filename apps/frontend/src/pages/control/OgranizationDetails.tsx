@@ -2,16 +2,17 @@ import React, {useEffect, useState} from "react";
 import {useParams, useHistory} from 'react-router-dom'
 import {connect} from "react-redux";
 
-import AsyncSelect from "react-select/async";
-
-import Page404 from "../404";
-
 import * as actionOrganization from '../../store/actions/organization';
 import * as actionUser from '../../store/actions/user';
 
+import Page404 from "../404";
+
 import Button from "../../components/Button";
-import Notification from "../../components/Notification";
 import {SelectAsync} from "../../components/inputs/"
+
+import {OrganizationStoreProps, StoreProps, UserStoreProps} from "../../@types/store";
+import {User} from "../../@types/user";
+import {Organization} from "../../@types/orgranization";
 
 
 const formInputs = [
@@ -36,14 +37,22 @@ const formInputs = [
 const PT_DETAIL = 0;
 const PT_USERS = 1;
 
-const ControlOrganization = ({dispatch, organization, user}) => {
+interface Props {
+  dispatch: any
+  organization: OrganizationStoreProps
+  user: UserStoreProps
+}
+
+const ControlOrganization = ({dispatch, organization, user}: Props) => {
   if (!user.isAuth) return <Page404/>
 
   const [tab, setTab] = useState(PT_DETAIL);
   const [editable, setEditable] = useState(false);
-  const [userSelected, setUserSelected] = useState({});
+  const [userSelected, setUserSelected] = useState<{label: string, value: string}>({label: "", value: ""});
   const [textSearch, setTextSearch] = useState('');
-  const [org, setOrg] = useState({
+  const [org, setOrg] = useState<Organization & {[key: string]: any}>({
+    balance: 0,
+    id: '',
     title: "",
     phone: "",
     email: "",
@@ -51,13 +60,21 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     is_activate: false,
     users: []
   });
-  const [valuesForm, setValuesForm] = useState({});
+  const [valuesForm, setValuesForm] = useState<Organization & {[key: string]: any}>({
+    balance: 0,
+    email: "",
+    id: "",
+    is_activate: false,
+    phone: "",
+    retailer: "",
+    title: "",
+  });
 
   const history = useHistory();
-  const {id} = useParams();
+  const {id} = useParams<{id: string}>();
 
   const chooseOrg = () =>
-    organization.data.map((v, i) => {
+    organization.data.map((v: Organization, i) => {
       if (v.id == id) {
         setOrg(v)
         setValuesForm(v)
@@ -65,7 +82,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     })
 
 
-  const handleChangeInput = (e) => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValuesForm({
       ...valuesForm,
       [e.target.name]: e.target.value
@@ -73,10 +90,10 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     console.log(e.target.name, e.target.value)
   }
 
-  const handleActivate = (e) => {
+  const handleActivate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValuesForm({
       ...valuesForm,
-      [e.target.name]: !valuesForm[e.target.name]
+      is_activate: !valuesForm.is_activate
     })
     console.log(e.target.name, e.target.value)
   }
@@ -84,7 +101,6 @@ const ControlOrganization = ({dispatch, organization, user}) => {
   const handleSave = () => {
     if (editable) {
       dispatch(actionOrganization.update(valuesForm))
-      Notification("test")
       setEditable(!editable)
       setOrg(valuesForm)
     }
@@ -105,7 +121,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     dispatch(actionOrganization.addUser(payload))
   }
 
-  const handleRemoveUser = ({username, id}) => {
+  const handleRemoveUser = ({username, id}: {username: string, id: string}) => {
     const payload = {
       username,
       id,
@@ -115,16 +131,16 @@ const ControlOrganization = ({dispatch, organization, user}) => {
     dispatch(actionOrganization.removeUser(payload))
   }
 
-  const handleUserSearch = (text) => {
+  const handleUserSearch = (text: string) => {
     setTextSearch(text)
     return text;
   }
 
-  const loadOptions = (inputValue, callback) => {
-    let data = [];
+  const loadOptions = (inputValue: string, callback: any) => {
+    let data: { label: any; value: any }[];
     actionUser.search({username: inputValue, is_retailer: false})
-      .then(res => {
-        data = res.map((v) => ({label: v.username, value: v.id})) || []
+      .then((res: {username: string, id: string}[]) => {
+        data = res?.map((v) => ({label: v.username, value: v.id})) || []
       })
 
     setTimeout(() => {
@@ -147,9 +163,9 @@ const ControlOrganization = ({dispatch, organization, user}) => {
       <Button onClick={() => history.goBack()}>Назад</Button>
     </div>
     <div className="mb-3">
-      <Button style={{width: 150}} schema={tab === PT_DETAIL ? 'main-primary' : ''}
+      <Button style={{width: 150}} schema={tab === PT_DETAIL ? `main-primary` : undefined}
               onClick={() => setTab(PT_DETAIL)}>Детали</Button>
-      <Button style={{width: 150}} schema={tab === PT_USERS ? 'main-primary' : ''}
+      <Button style={{width: 150}} schema={tab === PT_USERS ? 'main-primary' : undefined}
               onClick={() => setTab(PT_USERS)}>Users</Button>
     </div>
 
@@ -200,7 +216,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
         </thead>
         <tbody>
         {
-          org.users.map((v, i) => <tr key={i}>
+          org.users?.map((v: User, i) => <tr key={i}>
             <td>{v.username}</td>
             <td className="d-flex flex-column align-items-end">
               <Button schema={"danger"} onClick={() => handleRemoveUser({id: v.id, username: v.username})}>del</Button>
@@ -213,7 +229,7 @@ const ControlOrganization = ({dispatch, organization, user}) => {
   </div>
 }
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   organization: state.organization,
   user: state.user
 }))(ControlOrganization);

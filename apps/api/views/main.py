@@ -65,3 +65,19 @@ class Stores(APIView):
             return Response({
                 'detail': str(err)
             }, 400)
+
+
+class City(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        try:
+            return Response({
+                'success': True,
+                'data': sorted(['Омск', 'Москва', 'Санкт-Петербург'])
+            })
+        except Exception as err:
+            return Response({
+                'detail': str(err)
+            }, 400)

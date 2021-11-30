@@ -1,5 +1,4 @@
 import {Config} from "../config";
-import {UserRequest} from "../types/user";
 
 const axios = require('axios');
 
@@ -19,7 +18,7 @@ const getCSRF = () => {
   return decodeURIComponent(xsrfCookies[0].split('=')[1]);
 }
 
-const _request = (url: string, method: string, data: object, headers: object = {}) => {
+const _request = (url: string, method: string, data: object, headers: {} = {}) => {
   // console.log(headers)
   return axios({
     method,
@@ -31,7 +30,7 @@ const _request = (url: string, method: string, data: object, headers: object = {
   })
 }
 
-const _post = (url: string, data: object, headers: object = {}) =>
+const _post = (url: string, data: object, headers: {} = {}) =>
   _request(url, 'post', data, {"X-CSRFToken": getCSRF(), ...headers})
 
 const _update = (url: string, data: object) =>
@@ -54,6 +53,9 @@ export const urlStores = `${API}/api/v0/stores/`
 
 export const upload = (payload: any) =>
   _post(`${API}/api/v0/upload/`, payload)
+
+export const getCity = () =>
+  _get(`${API}/api/v0/city/`, {})
 
 // Auth API
 export const authLogin = (payload: { username: string, password: string }) =>
@@ -97,7 +99,7 @@ export const organizationCurrent = (payload: any) =>
 export const userSearch = (payload: any) =>
   _get(`${API}/api/v0/user/search/`, payload)
 
-export const userCoupons = (payload: any) =>
+export const userCoupons = () =>
   _get(`${API}/api/v0/user/coupons/`)
 
 // Offer API

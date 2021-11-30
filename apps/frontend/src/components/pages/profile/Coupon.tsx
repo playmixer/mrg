@@ -9,7 +9,10 @@ import ModalComponent from "../../Modal";
 import Button from "../../Button";
 import {InputText} from "../../inputs/";
 import {notify} from "../../Notification";
-import {Coupons} from "../../../types/offer";
+
+import {colors} from "../../../style/colors";
+
+import {Coupons} from "../../../@types/offer";
 
 interface PropsCoupon {
   data: Coupons
@@ -38,7 +41,7 @@ const Coupon = ({data, className, style, onActivate}: PropsCoupon) => {
             title={"Введите код торговой точки"}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCode(e.target.value)}
             value={code}
-           />
+          />
           <Button
             onClick={onEnterCode}
           >Ввод</Button>
@@ -57,8 +60,6 @@ const Coupon = ({data, className, style, onActivate}: PropsCoupon) => {
   return <CouponComponent
     className={className}
     style={{
-      display: 'flex',
-      justifyContent: 'space-between',
       ...style
     }}>
     <div style={{width: 150}}>
@@ -84,10 +85,9 @@ const Coupon = ({data, className, style, onActivate}: PropsCoupon) => {
     <div className="d-flex justify-content-center align-items-center" style={{width: 300}}>
       <Button onClick={() => setIsShowCode(true)} style={{width: 200}}>Посмотреть код</Button>
     </div>
-    <div style={{width: 100, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <CouponDetail><Link to={getLinkOffer(data.offer_id)}
-                          className="text-decoration-none">&#10132;</Link></CouponDetail>
-    </div>
+    <CouponDetail>
+      <Link to={getLinkOffer(data.offer_id)} className="text-decoration-none">&#10132;</Link>
+    </CouponDetail>
     <ModalComponent
       show={isShowCode}
       handleClose={() => setIsShowCode(false)}
@@ -100,18 +100,30 @@ const Coupon = ({data, className, style, onActivate}: PropsCoupon) => {
 }
 
 const CouponComponent = styled.div`
+  position: relative;
+  left: 0;
+  top: 0;
+  display: flex;
   width: 100%;
   height: 60px;
-  border: solid 1px #ADD8E6;
-  border-left: solid 4px #ADD8E6;
+  border: solid 1px ${_ => colors.bsBlue};
   display: flex;
+  justify-content: space-between;
+  margin: 0;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  
   &:hover {
-    background: whitesmoke;
-    border-left: solid 4px #0d6efd;
-  }
+    box-shadow: 5px -5px 0 ${_ => colors.bsBlue};
+    transition-duration: 0.2s;
+  }  
 `
 
 const CouponDetail = styled.span`
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export default Coupon;

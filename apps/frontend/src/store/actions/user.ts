@@ -1,7 +1,6 @@
 import * as apiHandle from '../../api/index';
 import * as userStore from '../reducers/user'
 import {errorHanding} from "../../api/handlers";
-import {RequestError, RequestResult} from "../../types/request";
 
 
 export const login = (payload: {username: string, password: string}) => (dispatch: any) => {
@@ -51,8 +50,8 @@ export const search = (payload: any) =>
     })
     .catch(errorHanding)
 
-export const coupons = (payload: object) => (dispatch: any) =>
-  apiHandle.userCoupons(payload)
+export const coupons = () => (dispatch: any) =>
+  apiHandle.userCoupons()
     .then((res: RequestResult) => {
       if (res.status === 200 && res.data.success) {
         dispatch(userStore.coupons(res.data.data))

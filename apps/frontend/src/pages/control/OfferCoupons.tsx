@@ -5,10 +5,18 @@ import styled from "styled-components";
 import * as offerAction from "../../store/actions/offer";
 import Button from "../../components/Button";
 import {InputText, RadioGroup, InputFile} from "../../components/inputs/";
-import * as apiHandle from "../../api";
-import {notify} from "../../components/Notification";
 
-const coupons_data = {
+import {OfferStoreProps, StoreProps} from "../../@types/store";
+import {Offer} from "../../@types/offer";
+
+
+interface PropsCouponsData {
+  count: number
+  purchased: number
+  activated: number
+}
+
+const coupons_data: PropsCouponsData = {
   count: 0,
   purchased: 0,
   activated: 0
@@ -25,18 +33,23 @@ const options_create_coupon_type = [
   }
 ]
 
+interface Props {
+  dispatch: any
+  offer: OfferStoreProps
+  data: Offer
+}
 
-const OfferCoupons = ({dispatch, offer, data}) => {
-  const [coupons, setCoupons] = useState(coupons_data);
+const OfferCoupons = ({dispatch, offer, data}: Props) => {
+  const [coupons, setCoupons] = useState<PropsCouponsData>(coupons_data);
   const [isOpenCreateCoupons, setIsOpenCreateCoupons] = useState(false);
-  const [inputForm, setInputForm] = useState({
+  const [inputForm, setInputForm] = useState<any>({
     offer_id: data.id,
     count: 100,
     type: options_create_coupon_type[0].value
   });
-  const [loadFile, setLoadFile] = useState();
+  const [loadFile, setLoadFile] = useState<any>();
 
-  const onChangeForm = (e) => {
+  const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputForm({
       ...inputForm,
       [e.target.name]: e.target.value
@@ -56,17 +69,14 @@ const OfferCoupons = ({dispatch, offer, data}) => {
     )
 
     dispatch(offerAction.createCoupons(form))
-      .then(res => {
-        if (res.success) {
-          setCoupons(res.data)
-          setIsOpenCreateCoupons(false)
-        }
+      .then((res: PropsCouponsData) => {
+        setCoupons(res)
+        setIsOpenCreateCoupons(false)
       })
   }
 
-  const onChangeCreateType = (e) => {
+  const onChangeCreateType = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChangeForm(e)
-
   }
 
   useEffect(() => {
@@ -113,8 +123,7 @@ const OfferCoupons = ({dispatch, offer, data}) => {
           <InputFile
             title={"Загрузить из файла"}
             accept={".txt"}
-            onChange={setLoadFile}
-          />
+            onChange={setLoadFile}/>
         </div>}
         <div>
           <Button onClick={handleCreateCoupons}>Создать</Button>
@@ -143,6 +152,6 @@ const CreateCouponsContainer = styled.div`
   margin-bottom: 3px;
 `
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   offer: state.offer
 }))(OfferCoupons);

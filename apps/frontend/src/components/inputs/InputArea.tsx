@@ -4,11 +4,11 @@ interface Props {
   title: string
   value: string
   onChange?: any
-  placeholder: string
-  readonly: boolean
+  placeholder?: string
+  readonly?: boolean
   name: string
-  disabled: boolean
-  style: object
+  disabled?: boolean
+  style?: object
 }
 
 export const InputArea = ({title, value, onChange, placeholder = "", readonly = false, name, disabled = false, style}: Props) => {

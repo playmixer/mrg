@@ -18,7 +18,29 @@ console.log('config', Config)
 
 const SUBDIR = Config.SUBDIRECTORY;
 
-const routers = {
+interface RouteProps {
+  name: string
+  link: string
+  title: string
+  page: any
+}
+
+interface RoutersProps {
+  auth: RouteProps
+  organization: RouteProps
+  controlOrg: RouteProps
+  controlOffer: RouteProps
+  controlOffers: RouteProps
+  controlOrgs: RouteProps
+  control: RouteProps
+  home: RouteProps
+  profile: RouteProps
+  profileCoupons: RouteProps
+  offer: RouteProps
+  page404: RouteProps
+}
+
+const routers: RoutersProps = {
   auth: {
     name: 'auth',
     link: `/auth`,
@@ -108,19 +130,20 @@ const routers = {
 export default routers;
 
 export const getLink = (page = 'home') => {
+  // @ts-ignore
   const url = SUBDIR + routers[page].link;
   return url;
 }
 
-export const getLinkOffer = (id) => {
+export const getLinkOffer = (id: string) => {
   return SUBDIR + routers.offer.link.replace(':id', id)
 }
 
-export const getLinkControlOffer = (id) => {
+export const getLinkControlOffer = (id: string) => {
   return SUBDIR + routers.controlOffer.link.replace(':id', id)
 }
 
-export const getImageUrl = (image) =>
+export const getImageUrl = (image: string) =>
   `${SUBDIR}/static/frontend/images/${image}`
 
 export const useQuery = () => {
@@ -129,5 +152,5 @@ export const useQuery = () => {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-export const getFileUrl = (filename) =>
+export const getFileUrl = (filename: string | undefined) =>
   `${SUBDIR}/api/v0/stores/?file=${filename}`

@@ -1,0 +1,36 @@
+interface PropsColors {
+
+}
+
+export const colors: any = {
+  bsBlue: '#0d6efd',
+  bsIndigo: '#6610f2',
+  bsPurple: '#6f42c1',
+  bsPink: '#d63384',
+  bsRed: '#dc3545',
+  bsOrange: '#fd7e14',
+  bsYellow: '#ffc107',
+  bsGreen: '#198754',
+  bsTeal: '#20c997',
+  bsCyan: '#0dcaf0',
+  bsWhite: '#fff',
+  bsGray: '#6c757d',
+  bsGrayDark: '#343a40',
+  bsGray100: '#f8f9fa',
+  bsGray200: '#e9ecef',
+  bsGray300: '#dee2e6',
+  bsGray400: '#ced4da',
+  bsGray500: '#adb5bd',
+  bsGray600: '#6c757d',
+  bsGray700: '#495057',
+  bsGray800: '#343a40',
+  bsGray900: '#212529',
+  bsPrimary: '#0d6efd',
+  bsSecondary: '#6c757d',
+  bsSuccess: '#198754',
+  bsInfo: '#0dcaf0',
+  bsWarning: '#ffc107',
+  bsDanger: '#dc3545',
+  bsLight: '#f8f9fa',
+  bsDark: '#212529',
+}

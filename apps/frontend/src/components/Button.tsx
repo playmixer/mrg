@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   children?: any
-  schema?: string
+  schema?: 'main-primary'|'primary'|'light'|'danger'|'link'
   type?: "button" | "submit" | "reset" | undefined
   onClick?: any
   style?: any
@@ -24,6 +24,13 @@ export default ({children, schema, type = "button", onClick, style, className = 
       break
     case 'danger':
       schemaStyle = 'btn-danger'
+      break
+    case 'link':
+      schemaStyle = 'btn-outline-light'
+      style = {
+        ...style,
+        borderWidth: "none"
+      }
       break
     default:
       schemaStyle = 'btn-outline-primary'

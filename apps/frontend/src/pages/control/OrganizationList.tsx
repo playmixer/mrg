@@ -7,8 +7,14 @@ import Button from "../../components/Button";
 import {InputText} from "../../components/inputs/";
 import * as organizationAction from "../../store/actions/organization";
 import routers, {getLink} from "../../routers";
+import {Organization} from "../../@types/orgranization";
+import {OrganizationStoreProps, StoreProps} from "../../@types/store";
 
-const DataList = ({data}) => {
+interface PropsDetail {
+  data: Organization[]
+}
+
+const DataList = ({data}: PropsDetail) => {
   const history = useHistory()
 
   return <div>
@@ -42,15 +48,28 @@ const DataList = ({data}) => {
   </div>
 }
 
-const OrganizationList = ({dispatch, organization}) => {
+interface Props {
+  dispatch: React.Dispatch<any>
+  organization: OrganizationStoreProps
+}
+
+const OrganizationList = ({dispatch, organization}: Props) => {
   const P_LIST = 0
   const P_NEW = 1
 
-  const [orgsData, setOrgsData] = useState([])
-  const [formValues, setFormValues] = useState({})
+  const [orgsData, setOrgsData] = useState<Organization[]>([])
+  const [formValues, setFormValues] = useState<Organization>({
+    balance: 0,
+    email: "",
+    id: "",
+    is_activate: false,
+    phone: "",
+    retailer: "",
+    title: ""
+  })
   const [action, setAction] = useState(P_LIST)
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.name, e.target.value)
     setFormValues({
       ...formValues,
@@ -58,7 +77,7 @@ const OrganizationList = ({dispatch, organization}) => {
     })
   }
 
-  const handleAddOrganization = (e) => {
+  const handleAddOrganization = (e: React.FormEvent) => {
     e.preventDefault()
     dispatch(organizationAction.add(formValues))
     setAction(P_LIST)
@@ -71,10 +90,10 @@ const OrganizationList = ({dispatch, organization}) => {
 
 
   return <div>
-    <Button style={{width: 100}} schema={action === P_LIST && `main-primary`} onClick={() => setAction(P_LIST)}>
+    <Button style={{width: 100}} schema={action === P_LIST ? `main-primary` : undefined} onClick={() => setAction(P_LIST)}>
       Список
     </Button>
-    <Button style={{width: 100}} schema={action === P_NEW && `main-primary`} onClick={() => setAction(P_NEW)}>
+    <Button style={{width: 100}} schema={action === P_NEW ? `main-primary` : undefined} onClick={() => setAction(P_NEW)}>
       Добавить
     </Button>
     {action === P_LIST && <DataList data={orgsData}/>}
@@ -110,6 +129,6 @@ const OrganizationList = ({dispatch, organization}) => {
   </div>
 }
 
-export default connect(state => ({
+export default connect((state: StoreProps) => ({
   organization: state.organization
 }))(OrganizationList);

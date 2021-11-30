@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   title: string
-  value: string
+  value?: string
   onChange?: any
   placeholder?: string
   readonly?: boolean
@@ -13,7 +13,7 @@ interface Props {
 }
 
 
-export const InputText = ({title, value, onChange, placeholder = "", readonly = false, type = "text", name, disabled = false, style}: Props) => {
+export const InputText = ({title, value="", onChange, placeholder = "", readonly = false, type = "text", name, disabled = false, style}: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange && onChange(e)
   }

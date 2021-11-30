@@ -1,13 +1,13 @@
-export interface RequestResult {
+interface RequestResult {
   status: number
   data: {
-    data?: object
+    data?: any
     success?: boolean
     detail?: string
   }
 }
 
-export interface RequestError {
+interface RequestError {
   message: string
   response: {
     data: {
